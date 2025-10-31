@@ -16,7 +16,7 @@ class ValidatorTest {
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n"})
     void 입력값이_null_또는_빈_문자열이면_예외를_발생시킨다(String input) {
-        assertThatThrownBy(()->Validator.validateNullOrBlank(input))
+        assertThatThrownBy(() -> Validator.validateNullOrBlank(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(INPUT_NULL_OR_BLANK_ERROR.getErrorMessage());
     }
@@ -25,7 +25,7 @@ class ValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {",1,2,3", "1,2,3,", ",1,2,3,", "1,,2", "1.2.3", "1|2|3"})
     void 입력값이_쉼표로_구분된_정수_형식이_아니면_예외를_발생시킨다(String input) {
-        assertThatThrownBy(()->Validator.validateCsvFormat(input))
+        assertThatThrownBy(() -> Validator.validateCsvFormat(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(CSV_FORMAT_ERROR.getErrorMessage());
     }
