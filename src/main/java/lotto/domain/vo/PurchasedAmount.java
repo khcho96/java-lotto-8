@@ -14,7 +14,7 @@ public class PurchasedAmount {
     }
 
     private void validateRange(Integer purchasedAmount) {
-        if (0 >= purchasedAmount && purchasedAmount > 100000) {
+        if (0 >= purchasedAmount || purchasedAmount > 100000) {
             throw new IllegalArgumentException(PURCHASED_AMOUNT_RANGE_ERROR.getErrorMessage());
         }
     }
