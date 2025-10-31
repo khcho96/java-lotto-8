@@ -1,8 +1,8 @@
 package lotto.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
+import lotto.util.random.LottoGenerator;
 import lotto.vo.PurchasedAmount;
 
 public class LottoMachine {
@@ -18,7 +18,7 @@ public class LottoMachine {
     public IssuedLottosDto generateLottos() {
         IssuedLottos issuedLottos = IssuedLottos.getInstance();
         for (int count = 0; count < lottoCount; count++) {
-            List<Integer> lottoNumbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            List<Integer> lottoNumbers = LottoGenerator.generateLottoNumbers();
             issuedLottos.add(lottoNumbers);
         }
         return issuedLottos.getIssuedLottos();
