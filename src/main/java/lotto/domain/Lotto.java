@@ -1,5 +1,9 @@
 package lotto.domain;
 
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_COUNT_ERROR;
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR;
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_UNIQUE_ERROR;
+
 import java.util.List;
 
 public class Lotto {
@@ -15,7 +19,7 @@ public class Lotto {
 
     private void validateLottoNumbersCount(List<Integer> numbers) {
         if (numbers.size() != 6) {
-            throw new IllegalArgumentException("로또 번호는 6개여야 합니다.");
+            throw new IllegalArgumentException(LOTTO_NUMBER_COUNT_ERROR.getErrorMessage());
         }
     }
 
@@ -24,14 +28,16 @@ public class Lotto {
                 filter(number -> 1 <= number && number <= 45)
                 .count();
         if (count != 6) {
-            throw new IllegalArgumentException("로또 번호는 1 이상 45 이하의 정수여야 합니다.");
+            throw new IllegalArgumentException(LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
         }
     }
 
     private void validateLottoNumbersUnique(List<Integer> numbers) {
-        long count = numbers.stream().distinct().count();
+        long count = numbers.stream()
+                .distinct()
+                .count();
         if (count != numbers.size()) {
-            throw new IllegalArgumentException("로또 번호는 중복이 없어야 합니다.");
+            throw new IllegalArgumentException(LOTTO_NUMBER_UNIQUE_ERROR.getErrorMessage());
         }
     }
 
