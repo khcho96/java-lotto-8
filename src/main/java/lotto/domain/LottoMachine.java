@@ -3,22 +3,22 @@ package lotto.domain;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
 import lotto.util.random.LottoGenerator;
-import lotto.domain.vo.PurchasedAmount;
+import lotto.domain.vo.PurchaseAmount;
 
 public class LottoMachine {
 
-    private final PurchasedAmount purchasedAmount;
+    private final PurchaseAmount purchaseAmount;
     private final Integer lottoCount;
 
-    public LottoMachine(Integer purchasedAmount) {
-        this.purchasedAmount = new PurchasedAmount(purchasedAmount);
-        lottoCount = this.purchasedAmount.getLottoCount();
+    public LottoMachine(Integer purchaseAmount) {
+        this.purchaseAmount = new PurchaseAmount(purchaseAmount);
+        lottoCount = this.purchaseAmount.getLottoCount();
     }
 
-    public IssuedLottosDto generateLottos() {
+    public IssuedLottosDto generateLottos(LottoGenerator lottoGenerator) {
         IssuedLottos issuedLottos = IssuedLottos.getInstance();
         for (int count = 0; count < lottoCount; count++) {
-            List<Integer> lottoNumbers = LottoGenerator.generateLottoNumbers();
+            List<Integer> lottoNumbers = lottoGenerator.generateLottoNumbers();
             issuedLottos.add(lottoNumbers);
         }
         return issuedLottos.getIssuedLottos();
