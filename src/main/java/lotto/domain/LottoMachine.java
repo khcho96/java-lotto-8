@@ -3,7 +3,7 @@ package lotto.domain;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
 import lotto.util.random.LottoGenerator;
-import lotto.vo.PurchasedAmount;
+import lotto.domain.vo.PurchasedAmount;
 
 public class LottoMachine {
 
