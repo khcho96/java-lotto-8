@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class LottoTest {
+    
     @DisplayName("로또 번호의 개수가 6개가 아니면 예외가 발생한다.")
     @ParameterizedTest
     @MethodSource("countErrorArgumentProvider")
