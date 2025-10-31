@@ -35,18 +35,17 @@ public class LottoController {
     }
 
     private IssuedLottosDto issueLottos() {
-        Printer.printPurchasedAmountRequest();
-        String rawPurchasedAmount = Reader.readInput();
+        Printer.printPurchaseAmountRequest();
+        String rawPurchaseAmount = Reader.readInput();
 
-        Integer purchasedAmount = InputParser.parsePurchasedAmount(rawPurchasedAmount);
+        Integer purchaseAmount = InputParser.parsePurchaseAmount(rawPurchaseAmount);
 
-        IssuedLottosDto issuedLottosDto = lottoService.issueLottos(purchasedAmount);
+        IssuedLottosDto issuedLottosDto = lottoService.issueLottos(purchaseAmount);
 
         return issuedLottosDto;
     }
 
     private void registerWinningLottoNumber() {
-
         Printer.printWinningLottoRequest();
         String rawWinningLottoNumber = Reader.readInput();
 
