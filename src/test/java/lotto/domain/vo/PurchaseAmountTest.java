@@ -39,6 +39,8 @@ class PurchaseAmountTest {
 
         // when
         Integer lottoCount = purchaseAmountObj.getLottoCount();
+
+        // then
         assertThat(lottoCount).isEqualTo(count);
     }
 }
