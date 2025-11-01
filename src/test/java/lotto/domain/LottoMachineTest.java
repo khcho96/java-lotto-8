@@ -22,7 +22,7 @@ class LottoMachineTest {
         lottoNumbers.add(new ArrayList<>(List.of(13, 1, 9, 8, 15, 30)));
         lottoNumbers.add(new ArrayList<>(List.of(4, 41, 23, 12, 13, 45)));
         Integer purchasedAmount = 5000;
-        LottoMachine lottoMachine = new LottoMachine(purchasedAmount);
+        LottoMachine lottoMachine = LottoMachine.from(purchasedAmount);
 
         // when
         IssuedLottosDto issuedLottosDto = lottoMachine.generateLottos(new FixedLottoGenerator(lottoNumbers));
