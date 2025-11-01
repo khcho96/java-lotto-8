@@ -13,10 +13,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class LottoTest {
-    
+
     @DisplayName("로또 번호의 개수가 6개가 아니면 예외가 발생한다.")
     @ParameterizedTest
     @MethodSource("countErrorArgumentProvider")
@@ -71,5 +72,19 @@ class LottoTest {
 
         // then
         assertThat(numbers).containsExactly(1, 2, 3, 5, 16, 43);
+    }
+
+    @DisplayName("로또 번호 중복 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"1,true", "7,false"})
+    void 로또_번호_중복_테스트(Integer number, boolean value) {
+        // given
+        Lotto lotto = new Lotto(List.of(1,2,3,4,5,6));
+
+        // when
+        boolean result = lotto.contains(number);
+
+        // then
+        assertThat(result).isEqualTo(value);
     }
 }
