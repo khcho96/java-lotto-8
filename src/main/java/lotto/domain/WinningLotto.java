@@ -15,7 +15,7 @@ public class WinningLotto {
     }
 
     public static WinningLotto from(List<Integer> winningLottoNumber) {
-        return new WinningLotto(new Lotto(winningLottoNumber));
+        return new WinningLotto(Lotto.from(winningLottoNumber));
     }
 
     public void registerBonusNumber(Integer bonusNumber) {
