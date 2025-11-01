@@ -42,6 +42,10 @@ public class Lotto {
         }
     }
 
+    public boolean contains(Integer number) {
+        return numbers.contains(number);
+    }
+
     public List<Integer> getNumbers() {
         return numbers.stream().toList();
     }
