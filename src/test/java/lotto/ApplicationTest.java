@@ -3,7 +3,6 @@ package lotto;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import lotto.domain.IssuedLottos;
 import lotto.domain.PurchaseAmount;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
