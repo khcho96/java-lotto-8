@@ -12,11 +12,7 @@ public class InputParser {
     public static Integer parsePurchaseAmount(String rawPurchaseAmount) {
         Validator.validateNullOrBlank(rawPurchaseAmount);
         rawPurchaseAmount = rawPurchaseAmount.strip();
-        try {
-            return Integer.parseInt(rawPurchaseAmount);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(NUMBER_FORMAT_ERROR.getErrorMessage());
-        }
+        return convertToNumber(rawPurchaseAmount);
     }
 
     public static List<Integer> parseWinningLottoNumber(String rawWinningLottoNumber) {
@@ -32,8 +28,12 @@ public class InputParser {
     public static Integer parseBonusNumber(String rawBonusNumber) {
         Validator.validateNullOrBlank(rawBonusNumber);
         rawBonusNumber = rawBonusNumber.strip();
+        return convertToNumber(rawBonusNumber);
+    }
+
+    private static Integer convertToNumber(String input) {
         try {
-            return Integer.parseInt(rawBonusNumber);
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(NUMBER_FORMAT_ERROR.getErrorMessage());
         }
