@@ -2,11 +2,19 @@ package lotto.domain;
 
 import static lotto.constant.ErrorMessage.BONUS_NUMBER_UNIQUE_ERROR;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR;
+import static lotto.constant.core.Constant.FIFTH_RANK_MATCHED_COUNT;
+import static lotto.constant.core.Constant.FIRST_RANK_MATCHED_COUNT;
+import static lotto.constant.core.Constant.FOURTH_RANK_MATCHED_COUNT;
+import static lotto.constant.core.Constant.LOTTO_NUMBER_MAX;
+import static lotto.constant.core.Constant.LOTTO_NUMBER_MIN;
+import static lotto.constant.core.Constant.SECOND_RANK_MATCHED_COUNT;
+import static lotto.constant.core.Constant.THIRD_RANK_MATCHED_COUNT;
 
 import java.util.List;
 import lotto.constant.core.Rank;
 
 public class WinningLotto {
+
     private final Lotto winningLotto;
     private Integer bonusNumber;
 
@@ -25,7 +33,7 @@ public class WinningLotto {
     }
 
     private void validateBonusNumberRange(Integer bonusNumber) {
-        if (0 >= bonusNumber || bonusNumber > 45) {
+        if (LOTTO_NUMBER_MIN > bonusNumber || bonusNumber > LOTTO_NUMBER_MAX) {
             throw new IllegalArgumentException(LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
         }
     }
@@ -38,19 +46,19 @@ public class WinningLotto {
 
     public Rank determineRank(Lotto issuedLotto) {
         Integer matchedCount = winningLotto.getMatchedCount(issuedLotto);
-        if (matchedCount == 6) {
+        if (matchedCount == FIRST_RANK_MATCHED_COUNT) {
             return Rank.FIRST;
         }
-        if (matchedCount == 5 && issuedLotto.contains(bonusNumber)) {
+        if (matchedCount == SECOND_RANK_MATCHED_COUNT && issuedLotto.contains(bonusNumber)) {
             return Rank.SECOND;
         }
-        if (matchedCount == 5) {
+        if (matchedCount == THIRD_RANK_MATCHED_COUNT) {
             return Rank.THIRD;
         }
-        if (matchedCount == 4) {
+        if (matchedCount == FOURTH_RANK_MATCHED_COUNT) {
             return Rank.FOURTH;
         }
-        if (matchedCount == 3) {
+        if (matchedCount == FIFTH_RANK_MATCHED_COUNT) {
             return Rank.FIFTH;
         }
         return null;
