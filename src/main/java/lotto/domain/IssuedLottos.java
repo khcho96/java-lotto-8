@@ -22,7 +22,7 @@ public class IssuedLottos {
     }
 
     public void add(List<Integer> lottoNumbers) {
-        lottos.add(new Lotto(lottoNumbers));
+        lottos.add(Lotto.from(lottoNumbers));
     }
 
     public IssuedLottosDto getIssuedLottos() {
