@@ -36,4 +36,8 @@ public class IssuedLottos {
     public Iterator<Lotto> getIterator() {
         return lottos.iterator();
     }
+
+    public static void resetForTest() {          // package-private 권장
+        issuedLottosObj = null;
+    }
 }
