@@ -17,53 +17,61 @@ public class LottoController {
     }
 
     public void run() {
+        IssuedLottosDto issuedLottosDto = issueLottos();
+        Printer.printIssuedLottos(issuedLottosDto);
+
+        registerWinningLottoNumber();
+
+        LottoResultDto lottoResultDto = getLottoResult();
+        Printer.printLottoResult(lottoResultDto);
+    }
+
+    private IssuedLottosDto issueLottos() {
         while (true) {
             try {
-                IssuedLottosDto issuedLottosDto = issueLottos();
-                Printer.printIssuedLottos(issuedLottosDto);
+                Printer.printPurchaseAmountRequest();
+                String rawPurchaseAmount = Reader.readInput();
 
-                registerWinningLottoNumber();
+                Integer purchaseAmount = InputParser.parsePurchaseAmount(rawPurchaseAmount);
 
-                LottoResultDto lottoResultDto = getLottoResult();
-                Printer.printLottoResult(lottoResultDto);
-
-                return;
+                return lottoService.issueLottos(purchaseAmount);
             } catch (IllegalArgumentException e) {
                 Printer.printErrorMessage(e);
             }
         }
     }
 
-    private IssuedLottosDto issueLottos() {
-        Printer.printPurchaseAmountRequest();
-        String rawPurchaseAmount = Reader.readInput();
-
-        Integer purchaseAmount = InputParser.parsePurchaseAmount(rawPurchaseAmount);
-
-        IssuedLottosDto issuedLottosDto = lottoService.issueLottos(purchaseAmount);
-
-        return issuedLottosDto;
-    }
-
     private void registerWinningLottoNumber() {
-        Printer.printWinningLottoRequest();
-        String rawWinningLottoNumber = Reader.readInput();
+        while (true) {
+            try {
+                Printer.printWinningLottoRequest();
+                String rawWinningLottoNumber = Reader.readInput();
 
-        List<String> winningLottoNumber = InputParser.parseWinningLottoNumber(rawWinningLottoNumber);
+                List<Integer> winningLottoNumber = InputParser.parseWinningLottoNumber(rawWinningLottoNumber);
 
-        lottoService.registerWinningLottoNumber(winningLottoNumber);
+                lottoService.registerWinningLottoNumber(winningLottoNumber);
+
+                return;
+            } catch (IllegalArgumentException e) {
+                Printer.printErrorMessage(e);
+            }
+        }
+
     }
-
 
     private LottoResultDto getLottoResult() {
-        Printer.printBonusNumberRequest();
-        String rawBonusNumber = Reader.readInput();
+        while (true) {
+            try {
+                Printer.printBonusNumberRequest();
+                String rawBonusNumber = Reader.readInput();
 
-        Integer bonusNumber = InputParser.parseBonusNumber(rawBonusNumber);
+                Integer bonusNumber = InputParser.parseBonusNumber(rawBonusNumber);
 
-        lottoService.registerBonusNumber(bonusNumber);
-        LottoResultDto lottoResultDto = lottoService.getLottoResult();
-
-        return lottoResultDto;
+                lottoService.registerBonusNumber(bonusNumber);
+                return lottoService.getLottoResult();
+            } catch (IllegalArgumentException e) {
+                Printer.printErrorMessage(e);
+            }
+        }
     }
 }
