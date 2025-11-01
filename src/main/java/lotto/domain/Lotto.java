@@ -3,6 +3,9 @@ package lotto.domain;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_COUNT_ERROR;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_UNIQUE_ERROR;
+import static lotto.constant.core.Constant.LOTTO_NUMBER_COUNT;
+import static lotto.constant.core.Constant.LOTTO_NUMBER_MAX;
+import static lotto.constant.core.Constant.LOTTO_NUMBER_MIN;
 
 import java.util.List;
 
@@ -24,16 +27,16 @@ public class Lotto {
     }
 
     private void validateLottoNumbersCount(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException(LOTTO_NUMBER_COUNT_ERROR.getErrorMessage());
         }
     }
 
     private void validateLottoNumbersRange(List<Integer> numbers) {
         long count = numbers.stream().
-                filter(number -> 1 <= number && number <= 45)
+                filter(number -> LOTTO_NUMBER_MIN <= number && number <= LOTTO_NUMBER_MAX)
                 .count();
-        if (count != 6) {
+        if (count != LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException(LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
         }
     }
