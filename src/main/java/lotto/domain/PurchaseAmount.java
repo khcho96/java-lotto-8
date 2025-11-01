@@ -2,6 +2,9 @@ package lotto.domain;
 
 import static lotto.constant.ErrorMessage.PURCHASE_AMOUNT_RANGE_ERROR;
 import static lotto.constant.ErrorMessage.PURCHASE_AMOUNT_UNIT_ERROR;
+import static lotto.constant.core.Constant.PURCHASE_AMOUNT_MAX;
+import static lotto.constant.core.Constant.PURCHASE_AMOUNT_MIN;
+import static lotto.constant.core.Constant.PURCHASE_AMOUNT_UNIT;
 
 public class PurchaseAmount {
 
@@ -26,19 +29,19 @@ public class PurchaseAmount {
     }
 
     private void validateRange(Integer purchaseAmount) {
-        if (0 >= purchaseAmount || purchaseAmount > 100000) {
+        if (PURCHASE_AMOUNT_MIN >= purchaseAmount || purchaseAmount > PURCHASE_AMOUNT_MAX) {
             throw new IllegalArgumentException(PURCHASE_AMOUNT_RANGE_ERROR.getErrorMessage());
         }
     }
 
     private void validateUnit(Integer purchaseAmount) {
-        if (purchaseAmount % 1000 != 0) {
+        if (purchaseAmount % PURCHASE_AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException(PURCHASE_AMOUNT_UNIT_ERROR.getErrorMessage());
         }
     }
 
     public Integer getLottoCount() {
-        return purchaseAmount / 1000;
+        return purchaseAmount / PURCHASE_AMOUNT_UNIT;
     }
 
     public Double getProfitRate(Long profit) {
