@@ -10,12 +10,16 @@ public class Lotto {
 
     private final List<Integer> numbers;
 
-    public Lotto(List<Integer> numbers) {
+    private Lotto(List<Integer> numbers) {
         validateLottoNumbersCount(numbers);
         validateLottoNumbersRange(numbers);
         validateLottoNumbersUnique(numbers);
         numbers.sort(null);
         this.numbers = numbers.stream().toList();
+    }
+    
+    public static Lotto from(List<Integer> numbers) {
+        return new Lotto(numbers);
     }
 
     private void validateLottoNumbersCount(List<Integer> numbers) {
