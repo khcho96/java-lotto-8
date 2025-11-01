@@ -1,6 +1,7 @@
 package lotto.constant;
 
 public enum ErrorMessage {
+
     INPUT_NULL_OR_BLANK_ERROR("입력값이 null 또는 빈 문자열입니다."),
     NUMBER_FORMAT_ERROR("숫자 형태만 입력 가능합니다."),
     CSV_FORMAT_ERROR("쉼표(,)를 기준으로 구분되는 6개의 정수 입력이어야 합니다. 예) 1,2,3,4,5,6"),
