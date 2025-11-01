@@ -44,4 +44,8 @@ public class PurchaseAmount {
     public Double getProfitRate(Long profit) {
         return (double) profit / purchaseAmount * 100;
     }
+
+    public static void resetForTest() {          // package-private 권장
+        purchaseAmountObj = null;
+    }
 }
