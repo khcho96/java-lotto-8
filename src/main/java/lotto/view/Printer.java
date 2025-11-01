@@ -17,7 +17,7 @@ public class Printer {
     private static final String PROFIT_RATE_RESULT = "총 수익률은 %.1f%%입니다.";
 
     public static void printPurchaseAmountRequest() {
-        System.out.println(PURCHASE_AMOUNT_REQUEST);
+        System.out.println(NEW_LINE + PURCHASE_AMOUNT_REQUEST);
     }
 
     public static void printWinningLottoRequest() {
