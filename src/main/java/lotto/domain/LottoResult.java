@@ -24,4 +24,33 @@ public class LottoResult {
     public static LottoResult getInstance() {
         return new LottoResult();
     }
+
+    public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) {
+        calculateLottoResult(winningLotto, issuedLottos);
+        calculateProfitRate();
+        return new LottoResultDto(Collections.unmodifiableMap(lottoResult), profitRate);
+    }
+
+    private void calculateLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) {
+        Iterator<Lotto> issuedLottosIterator = issuedLottos.getIterator();
+        while (issuedLottosIterator.hasNext()) {
+            Lotto issuedLotto = issuedLottosIterator.next();
+            Rank rank = winningLotto.determineRank(issuedLotto);
+            if (rank != null) {
+                lottoResult.put(rank, lottoResult.get(rank) + 1);
+            }
+        }
+    }
+
+    private void calculateProfitRate() {
+        Long profit = 0L;
+        for (Rank rank : lottoResult.keySet()) {
+            profit += rank.getPrize() * lottoResult.get(rank);
+        }
+
+        PurchaseAmount purchaseAmount = PurchaseAmount.getInstance();
+        if (purchaseAmount != null) {
+            profitRate = purchaseAmount.getProfitRate(profit);
+        }
+    }
 }
