@@ -28,4 +28,14 @@ public class InputParser {
                 .map(Integer::parseInt)
                 .toList();
     }
+
+    public static Integer parseBonusNumber(String rawBonusNumber) {
+        Validator.validateNullOrBlank(rawBonusNumber);
+        rawBonusNumber = rawBonusNumber.strip();
+        try {
+            return Integer.parseInt(rawBonusNumber);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(NUMBER_FORMAT_ERROR.getErrorMessage());
+        }
+    }
 }
