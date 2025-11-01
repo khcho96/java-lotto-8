@@ -8,9 +8,13 @@ public class LottoMachine {
 
     private final Integer lottoCount;
 
-    public LottoMachine(Integer purchaseAmount) {
+    private LottoMachine(Integer purchaseAmount) {
         PurchaseAmount purchaseAmountObj = PurchaseAmount.from(purchaseAmount);
         lottoCount = purchaseAmountObj.getLottoCount();
+    }
+
+    public static LottoMachine from(Integer purchaseAmount) {
+        return new LottoMachine(purchaseAmount);
     }
 
     public IssuedLottosDto generateLottos(LottoGenerator lottoGenerator) {
