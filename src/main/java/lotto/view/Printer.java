@@ -1,6 +1,8 @@
 package lotto.view;
 
 import java.util.List;
+import java.util.Map;
+import lotto.constant.core.Rank;
 import lotto.dto.IssuedLottosDto;
 import lotto.dto.LottoResultDto;
 
@@ -10,28 +12,37 @@ public class Printer {
     private static final String PURCHASE_AMOUNT_REQUEST = "구입금액을 입력해 주세요.";
     private static final String WINNING_LOTTO_REQUEST = "당첨 번호를 입력해 주세요.";
     private static final String BONUS_NUMBER_REQUEST = "보너스 번호를 입력해 주세요.";
+    private static final String LOTTO_COUNT_RESULT = "%d개를 구매했습니다.";
+    private static final String WINNING_RESULT = "당첨 통계" + NEW_LINE + "---";
+    private static final String PROFIT_RATE_RESULT = "총 수익률은 %.1f%%입니다.";
 
     public static void printPurchaseAmountRequest() {
         System.out.println(PURCHASE_AMOUNT_REQUEST);
     }
 
     public static void printWinningLottoRequest() {
-        System.out.println(WINNING_LOTTO_REQUEST);
+        System.out.println(NEW_LINE + WINNING_LOTTO_REQUEST);
     }
 
     public static void printBonusNumberRequest() {
-        System.out.println(BONUS_NUMBER_REQUEST);
+        System.out.println(NEW_LINE + BONUS_NUMBER_REQUEST);
     }
 
     public static void printIssuedLottos(IssuedLottosDto issuedLottosDto) {
         List<List<Integer>> issuedLottos = issuedLottosDto.issuedLottos();
-        System.out.println(NEW_LINE + issuedLottos.size() + "개를 구매했습니다.");
+        System.out.printf(NEW_LINE + LOTTO_COUNT_RESULT + NEW_LINE, issuedLottos.size());
         for (List<Integer> issuedLotto : issuedLottos) {
             System.out.println(issuedLotto);
         }
     }
 
     public static void printLottoResult(LottoResultDto lottoResultDto) {
+        System.out.println(NEW_LINE + WINNING_RESULT);
+        Map<Rank, Integer> lottoResult = lottoResultDto.lottoResult();
+        for (Rank rank : lottoResult.keySet()) {
+            System.out.printf(rank.getPrintedContents() + NEW_LINE, lottoResult.get(rank));
+        }
+        System.out.printf(PROFIT_RATE_RESULT + NEW_LINE, lottoResultDto.profitRate());
     }
 
     public static void printErrorMessage(IllegalArgumentException e) {
