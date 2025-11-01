@@ -87,4 +87,18 @@ class LottoTest {
         // then
         assertThat(result).isEqualTo(value);
     }
+
+    @DisplayName("로또 번호 일치하는 개수 반환 테스트")
+    @Test
+    void 로또_번호_일치하는_개수_반환_테스트() {
+        // given
+        Lotto winningLotto = new Lotto(List.of(1,2,3,4,5,6));
+        Lotto lotto = new Lotto(List.of(1,2,3,4,5,7));
+
+        // when
+        Integer matchedCount = winningLotto.getMatchedCount(lotto);
+
+        // then
+        assertThat(matchedCount).isEqualTo(5);
+    }
 }
