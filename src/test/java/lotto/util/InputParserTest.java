@@ -85,4 +85,34 @@ class InputParserTest {
                 Arguments.of("   1 , 2 , 3 , 4 , 5 , 6   ", List.of(1, 2, 3, 4, 5, 6))
         );
     }
+
+    @DisplayName("보너스 번호 입력값이 null 또는 빈 문자열이면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "\t", "\n"})
+    void 보너스_번호_입력값이_null_또는_빈_문자열이면_예외를_발생시킨다(String input) {
+        assertThatThrownBy(() -> InputParser.parseBonusNumber(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INPUT_NULL_OR_BLANK_ERROR.getErrorMessage());
+    }
+
+    @DisplayName("보너스 번호 입력값이 숫자 형식이 아니면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"천", "Two thousand", "4 5"})
+    void 보너스_번호_입력값이_숫자_형식이_아니면_예외를_발생시킨다(String input) {
+        assertThatThrownBy(() -> InputParser.parseBonusNumber(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(NUMBER_FORMAT_ERROR.getErrorMessage());
+    }
+
+    @DisplayName("보너스 번호 입력값 정수 변환 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"12,12", "0,0", "-1,-1", "46,46", "  12  ,12"})
+    void 보너스_번호_입력값_정수_변환_테스트(String input, Integer convertedValue) {
+        // when
+        Integer purchaseAmount = InputParser.parseBonusNumber(input);
+
+        // then
+        assertThat(purchaseAmount).isEqualTo(convertedValue);
+    }
 }
