@@ -38,8 +38,8 @@ class LottoTest {
     @DisplayName("로또 번호의 범위가 알맞지 않으면 예외가 발생한다.")
     @ParameterizedTest
     @MethodSource("rangeErrorArgumentProvider")
-    void 로또_번호의_범위가_알맞지_않으면_예외가_발생한다() {
-        assertThatThrownBy(() -> new Lotto(List.of(-1, 0, 3, 4, 5, 46)))
+    void 로또_번호의_범위가_알맞지_않으면_예외가_발생한다(List<Integer> lottoNumber) {
+        assertThatThrownBy(() -> new Lotto(lottoNumber))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
     }
@@ -47,7 +47,7 @@ class LottoTest {
     static Stream<Arguments> rangeErrorArgumentProvider() {
         return Stream.of(
                 Arguments.of(List.of(-1, 2, 3, 4, 5, 6)),
-                Arguments.of(List.of(1, 2, 46, 4, 5)),
+                Arguments.of(List.of(1, 2, 46, 4, 5, 6)),
                 Arguments.of(List.of(0, 1, 2, 4, 6, 7))
         );
     }
