@@ -49,4 +49,10 @@ public class Lotto {
     public List<Integer> getNumbers() {
         return numbers.stream().toList();
     }
+
+    public Integer getMatchedCount(Lotto lotto) {
+        return (int) lotto.numbers.stream()
+                .filter(numbers::contains)
+                .count();
+    }
 }
