@@ -7,7 +7,7 @@ import lotto.domain.LottoResult;
 import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottosDto;
 import lotto.dto.LottoResultDto;
-import lotto.util.random.RandomLottoGenerator;
+import lotto.random.RandomLottoGenerator;
 
 public class LottoService {
 

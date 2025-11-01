@@ -1,4 +1,4 @@
-package lotto.util.random;
+package lotto.random;
 
 import java.util.List;
 

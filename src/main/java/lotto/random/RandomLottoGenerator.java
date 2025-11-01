@@ -1,4 +1,4 @@
-package lotto.util.random;
+package lotto.random;
 
 import static lotto.constant.core.Constant.LOTTO_NUMBER_COUNT;
 import static lotto.constant.core.Constant.LOTTO_NUMBER_MAX;

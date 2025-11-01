@@ -2,7 +2,7 @@ package lotto.domain;
 
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
-import lotto.util.random.LottoGenerator;
+import lotto.random.LottoGenerator;
 
 public class LottoMachine {
 
