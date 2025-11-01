@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
 
@@ -30,5 +31,9 @@ public class IssuedLottos {
             issuedLottos.add(lotto.getNumbers());
         }
         return new IssuedLottosDto(issuedLottos);
+    }
+
+    public Iterator<Lotto> getIterator() {
+        return lottos.iterator();
     }
 }
