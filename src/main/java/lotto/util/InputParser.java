@@ -5,9 +5,11 @@ import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class InputParser {
+public final class InputParser {
 
     private static final String DELIMITER = ",";
+
+    private InputParser() {}
 
     public static Integer parsePurchaseAmount(String rawPurchaseAmount) {
         Validator.validateNullOrBlank(rawPurchaseAmount);
