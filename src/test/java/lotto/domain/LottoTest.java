@@ -79,7 +79,7 @@ class LottoTest {
     @CsvSource(value = {"1,true", "7,false"})
     void 로또_번호_중복_테스트(Integer number, boolean value) {
         // given
-        Lotto lotto = new Lotto(List.of(1,2,3,4,5,6));
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
 
         // when
         boolean result = lotto.contains(number);
@@ -89,16 +89,28 @@ class LottoTest {
     }
 
     @DisplayName("로또 번호 일치하는 개수 반환 테스트")
-    @Test
-    void 로또_번호_일치하는_개수_반환_테스트() {
+    @ParameterizedTest
+    @MethodSource("MatchedCountArgumentProvider")
+    void 로또_번호_일치하는_개수_반환_테스트(List<Integer> numbers, Integer expectedMatchedCount) {
         // given
-        Lotto winningLotto = new Lotto(List.of(1,2,3,4,5,6));
-        Lotto lotto = new Lotto(List.of(1,2,3,4,5,7));
+        Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+        Lotto lotto = new Lotto(numbers);
 
         // when
         Integer matchedCount = winningLotto.getMatchedCount(lotto);
 
         // then
-        assertThat(matchedCount).isEqualTo(5);
+        assertThat(matchedCount).isEqualTo(expectedMatchedCount);
+    }
+
+    static Stream<Arguments> MatchedCountArgumentProvider() {
+        return Stream.of(
+                Arguments.of(List.of(1, 8, 9, 10, 11, 12), 1),
+                Arguments.of(List.of(1, 2, 9, 10, 11, 12), 2),
+                Arguments.of(List.of(1, 2, 3, 10, 11, 12), 3),
+                Arguments.of(List.of(1, 2, 3, 4, 11, 12), 4),
+                Arguments.of(List.of(1, 2, 3, 4, 5, 12), 5),
+                Arguments.of(List.of(1, 2, 3, 4, 5, 6), 6)
+        );
     }
 }
