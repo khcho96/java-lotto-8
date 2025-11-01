@@ -1,16 +1,38 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import lotto.domain.IssuedLottos;
+import lotto.domain.PurchaseAmount;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomUniqueNumbersInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
+import static lotto.constant.ErrorMessage.BONUS_NUMBER_UNIQUE_ERROR;
+import static lotto.constant.ErrorMessage.CSV_FORMAT_ERROR;
+import static lotto.constant.ErrorMessage.INPUT_NULL_OR_BLANK_ERROR;
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_COUNT_ERROR;
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR;
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_UNIQUE_ERROR;
+import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR;
+import static lotto.constant.ErrorMessage.PURCHASE_AMOUNT_RANGE_ERROR;
+import static lotto.constant.ErrorMessage.PURCHASE_AMOUNT_UNIT_ERROR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ApplicationTest extends NsTest {
-    private static final String ERROR_MESSAGE = "[ERROR]";
+
+    @AfterEach
+    void tearDown() {
+        IssuedLottos.resetForTest();
+        PurchaseAmount.resetForTest();
+    }
 
     @Test
     void 기능_테스트() {
@@ -46,12 +68,146 @@ class ApplicationTest extends NsTest {
         );
     }
 
-    @Test
-    void 예외_테스트() {
-        assertSimpleTest(() -> {
-            runException("1000j");
-            assertThat(output()).contains(ERROR_MESSAGE);
-        });
+    @DisplayName("구입 금액 입력 예외 테스트")
+    @Nested
+    class PurchaseAmountError {
+        @DisplayName("빈 문자열이 입력되면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {" ", "\t", "\n"})
+        void 빈_문자열이_입력되면_예외가_발생한다(String purchaseAmount) {
+            assertSimpleTest(() -> {
+                runException(purchaseAmount);
+                assertThat(output()).contains(INPUT_NULL_OR_BLANK_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("숫자가 아닌 형식이 입력되면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"만원", "1000won"})
+        void 숫자가_아닌_형식이_입력되면_예외가_발생한다(String purchaseAmount) {
+            assertSimpleTest(() -> {
+                runException(purchaseAmount);
+                assertThat(output()).contains(NUMBER_FORMAT_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("구입 금액의 범위가 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"-1", "0", "100001"})
+        void 구입_금액의_범위가_아니면_예외가_발생한다(String purchaseAmount) {
+            assertSimpleTest(() -> {
+                runException(purchaseAmount);
+                assertThat(output()).contains(PURCHASE_AMOUNT_RANGE_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("천원 단위가 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"1001", "1500", "12300"})
+        void 천원_단위가_아니면_예외가_발생한다(String purchaseAmount) {
+            assertSimpleTest(() -> {
+                runException(purchaseAmount);
+                assertThat(output()).contains(PURCHASE_AMOUNT_UNIT_ERROR.getErrorMessage());
+            });
+        }
+    }
+
+    @DisplayName("당첨 번호 입력 예외 테스트")
+    @Nested
+    class WinningLottoNumberError {
+        @DisplayName("빈 문자열이 입력되면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {" ", "\t", "\n"})
+        void 빈_문자열이_입력되면_예외가_발생한다(String winningLottoNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", winningLottoNumber);
+                assertThat(output()).contains(INPUT_NULL_OR_BLANK_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("당첨 번호 입력값이 쉼표로 구분돠는 형식이 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {",1,2,3", "1,2,3,", ",1,2,3,", "1,,2", "1.2.3", "1:2:3", "1|2|3"})
+        void 당첨_번호_입력값이_쉼표로_구분되는_형식이_아니면_예외가_발생한다(String winningLottoNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", winningLottoNumber);
+                assertThat(output()).contains(CSV_FORMAT_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("당첨 번호가 6개가 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"1,2,3,4,5", "1,2,3,4,5,6,7"})
+        void 당첨_번호가_6개가_아니면_예외가_발생한다(String winningLottoNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", winningLottoNumber);
+                assertThat(output()).contains(LOTTO_NUMBER_COUNT_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("당첨 번호가 로또 번호의 범위가 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"1,2,3,4,5,0", "1,2,3,4,5,46"})
+        void 당첨_번호가_로또_번호의_범위가_아니면_예외가_발생한다(String winningLottoNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", winningLottoNumber);
+                assertThat(output()).contains(LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("당첨 번호가 중복이면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"1,2,3,4,5,5"})
+        void 당첨_번호가_중복이면_예외가_발생한다(String winningLottoNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", winningLottoNumber);
+                assertThat(output()).contains(LOTTO_NUMBER_UNIQUE_ERROR.getErrorMessage());
+            });
+        }
+    }
+
+    @DisplayName("보너스 번호 입력 예외 테스트")
+    @Nested
+    class BonusNumberError {
+        @DisplayName("빈 문자열이 입력되면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {" ", "\t", "\n"})
+        void 빈_문자열이_입력되면_예외가_발생한다(String bonusNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", "1,2,3,4,5,6", bonusNumber);
+                assertThat(output()).contains(INPUT_NULL_OR_BLANK_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("숫자 형식이 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"일", "삼", "two", "1000j"})
+        void 숫자_형식이_아니면_예외가_발생한다(String bonusNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", "1,2,3,4,5,6", bonusNumber);
+                assertThat(output()).contains(NUMBER_FORMAT_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("보너스 번호가 로또 번호의 범위가 아니면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"-1", "0", "46"})
+        void 보너스_번호가_로또_번호의_범위가_아니면_예외가_발생한다(String bonusNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", "1,2,3,4,5,6", bonusNumber);
+                assertThat(output()).contains(LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
+            });
+        }
+
+        @DisplayName("보너스 번호가 당첨 번호와 중복이면 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"1", "3", "5"})
+        void 보너스_번호가_당첨_번호와_중복이면_예외가_발생한다(String bonusNumber) {
+            assertSimpleTest(() -> {
+                runException("1000", "1,2,3,4,5,6", bonusNumber);
+                assertThat(output()).contains(BONUS_NUMBER_UNIQUE_ERROR.getErrorMessage());
+            });
+        }
     }
 
     @Override
