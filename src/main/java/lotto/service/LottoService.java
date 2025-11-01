@@ -1,9 +1,12 @@
 package lotto.service;
 
 import java.util.List;
+import lotto.domain.IssuedLottos;
 import lotto.domain.LottoMachine;
+import lotto.domain.LottoResult;
 import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottosDto;
+import lotto.dto.LottoResultDto;
 import lotto.util.random.RandomLottoGenerator;
 
 public class LottoService {
@@ -22,5 +25,11 @@ public class LottoService {
 
     public void registerBonusNumber(Integer bonusNumber) {
         winningLotto.registerBonusNumber(bonusNumber);
+    }
+
+    public LottoResultDto getLottoResult() {
+        IssuedLottos issuedLottos = IssuedLottos.getInstance();
+        LottoResult lottoResult = LottoResult.getInstance();
+        return lottoResult.getLottoResult(winningLotto, issuedLottos);
     }
 }
