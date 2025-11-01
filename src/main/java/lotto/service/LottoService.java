@@ -14,7 +14,7 @@ public class LottoService {
     private WinningLotto winningLotto;
 
     public IssuedLottosDto issueLottos(Integer purchaseAmount) {
-        LottoMachine lottoMachine = new LottoMachine(purchaseAmount);
+        LottoMachine lottoMachine = LottoMachine.from(purchaseAmount);
         RandomLottoGenerator lottoGenerator = new RandomLottoGenerator();
         return lottoMachine.generateLottos(lottoGenerator);
     }
