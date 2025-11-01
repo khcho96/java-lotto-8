@@ -14,10 +14,11 @@ public class Lotto {
         validateLottoNumbersCount(numbers);
         validateLottoNumbersRange(numbers);
         validateLottoNumbersUnique(numbers);
-        numbers.sort(null);
-        this.numbers = numbers.stream().toList();
+        this.numbers = numbers.stream()
+                .sorted()
+                .toList();
     }
-    
+
     public static Lotto from(List<Integer> numbers) {
         return new Lotto(numbers);
     }
