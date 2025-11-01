@@ -56,7 +56,7 @@ class WinningLottoTest {
     @DisplayName("당첨 번호에 중복된 숫자가 있으면 예외가 발생한다.")
     @Test
     void 당첨_번호에_중복된_숫자가_있으면_예외가_발생한다() {
-        assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5, 5)))
+        assertThatThrownBy(() -> Lotto.from(List.of(1, 2, 3, 4, 5, 5)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(LOTTO_NUMBER_UNIQUE_ERROR.getErrorMessage());
     }
@@ -93,7 +93,7 @@ class WinningLottoTest {
         // given
         WinningLotto winningLotto = WinningLotto.from(List.of(1, 2, 3, 4, 5, 6));
         winningLotto.registerBonusNumber(7);
-        Lotto lotto = new Lotto(numbers);
+        Lotto lotto = Lotto.from(numbers);
 
         // when
         Rank rank = winningLotto.determineRank(lotto);
