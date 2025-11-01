@@ -8,7 +8,7 @@ public class PurchaseAmount {
     private static PurchaseAmount purchaseAmountObj;
     private final Integer purchaseAmount;
 
-    public PurchaseAmount(Integer purchaseAmount) {
+    private PurchaseAmount(Integer purchaseAmount) {
         validateRange(purchaseAmount);
         validateUnit(purchaseAmount);
         this.purchaseAmount = purchaseAmount;
