@@ -15,6 +15,7 @@ public enum ErrorMessage {
 
     BONUS_NUMBER_UNIQUE_ERROR("보너스 번호는 당첨 번호와 중복되지 않아야 합니다.");
 
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
     private final String errorMessage;
 
     ErrorMessage(String errorMessage) {
@@ -22,6 +23,6 @@ public enum ErrorMessage {
     }
 
     public String getErrorMessage() {
-        return "[ERROR] " + errorMessage;
+        return ERROR_MESSAGE_PREFIX + errorMessage;
     }
 }
