@@ -23,7 +23,7 @@ public final class InputParser {
         Validator.validateCsvFormat(rawWinningLottoNumber);
         return Stream.of(rawWinningLottoNumber.split(DELIMITER))
                 .map(String::strip)
-                .map(Integer::parseInt)
+                .map(InputParser::convertToNumber)
                 .toList();
     }
 
