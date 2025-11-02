@@ -5,10 +5,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class IssuedLottosTest {
+
+    @AfterEach
+    void tearDown() {
+        IssuedLottos.resetForTest();
+    }
 
     @DisplayName("로또 생성 테스트")
     @Test
