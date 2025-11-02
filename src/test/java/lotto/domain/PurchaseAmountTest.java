@@ -5,12 +5,18 @@ import static lotto.constant.ErrorMessage.PURCHASE_AMOUNT_UNIT_ERROR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PurchaseAmountTest {
+
+    @AfterEach
+    void tearDown() {
+        PurchaseAmount.resetForTest();
+    }
 
     @DisplayName("구매 금액 입력값이 알맞은 범위가 아니면 예외가 발생한다.")
     @ParameterizedTest
