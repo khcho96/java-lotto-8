@@ -21,6 +21,7 @@ public class LottoController {
         Printer.printIssuedLottos(issuedLottosDto);
 
         registerWinningLottoNumber();
+        registerBonusNumber();
 
         LottoResultDto lottoResultDto = getLottoResult();
         Printer.printLottoResult(lottoResultDto);
@@ -56,10 +57,9 @@ public class LottoController {
                 Printer.printErrorMessage(e);
             }
         }
-
     }
 
-    private LottoResultDto getLottoResult() {
+    private void registerBonusNumber() {
         while (true) {
             try {
                 Printer.printBonusNumberRequest();
@@ -68,6 +68,17 @@ public class LottoController {
                 Integer bonusNumber = InputParser.parseBonusNumber(rawBonusNumber);
 
                 lottoService.registerBonusNumber(bonusNumber);
+
+                return;
+            } catch (IllegalArgumentException e) {
+                Printer.printErrorMessage(e);
+            }
+        }
+    }
+
+    private LottoResultDto getLottoResult() {
+        while (true) {
+            try {
                 return lottoService.getLottoResult();
             } catch (IllegalArgumentException e) {
                 Printer.printErrorMessage(e);
