@@ -7,7 +7,6 @@ import lotto.dto.IssuedLottosDto;
 
 public class IssuedLottos {
 
-    private static IssuedLottos instance;
     private final List<Lotto> lottos;
 
     private IssuedLottos() {
@@ -15,10 +14,7 @@ public class IssuedLottos {
     }
 
     public static IssuedLottos getInstance() {
-        if (instance == null) {
-            instance = new IssuedLottos();
-        }
-        return instance;
+        return new IssuedLottos();
     }
 
     public void add(List<Integer> lottoNumbers) {
@@ -35,9 +31,5 @@ public class IssuedLottos {
 
     public Iterator<Lotto> getIssuedLottosViewer() {
         return lottos.iterator();
-    }
-
-    public static void resetForTest() {
-        instance = null;
     }
 }
