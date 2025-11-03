@@ -7,7 +7,7 @@ import lotto.domain.LottoResult;
 import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottosDto;
 import lotto.dto.LottoResultDto;
-import lotto.random.RandomLottoGenerator;
+import lotto.generator.RandomLottoGenerator;
 
 public class LottoService {
 
@@ -16,6 +16,7 @@ public class LottoService {
     public IssuedLottosDto issueLottos(Integer purchaseAmount) {
         LottoMachine lottoMachine = LottoMachine.from(purchaseAmount);
         RandomLottoGenerator lottoGenerator = new RandomLottoGenerator();
+
         return lottoMachine.generateLottos(lottoGenerator);
     }
 
@@ -30,6 +31,7 @@ public class LottoService {
     public LottoResultDto getLottoResult() {
         IssuedLottos issuedLottos = IssuedLottos.getInstance();
         LottoResult lottoResult = LottoResult.getInstance();
+
         return lottoResult.getLottoResult(winningLotto, issuedLottos);
     }
 }
