@@ -223,3 +223,88 @@
   - [x] 사용자가 입력하는 값은 camp.nextstep.edu.missionutils.Console의 readLine()을 활용한다.
 
 ## 📝 구현 코드 명세
+| Class                               | Field&Method                                                 | Role(Responsibility)              |
+|-------------------------------------|--------------------------------------------------------------|-----------------------------------|
+| constant.core.Constant              | PURCHASE_AMOUNT_MIN, PURCHASE_AMOUNT_MAX 등                   | 비즈니스 로직에 필요한 상수로 관리               |
+| constant.core.Rank(Enum)            | FIRST, SECOND, THIRD, FOURTH, FIFTH                          | 각 등수를 의미하는 Enum 객체                |
+|                                     | private final Long prize                                     | 등수별 부여된 상금                        |
+|                                     | private final String printedContents                         | 등수별 결과 출력을 위한 문자열                 |
+| constant.ErrorMessage(Enum)         | INPUT_NULL_OR_BLANK_ERROR, NUMBER_FORMAT_ERROR 등             | 에러 메시지를 담은 Enum 객체                |
+|                                     | private static final String ERROR_MESSAGE_PREFIX             | “[ERROR]" 문자열                     |
+|                                     | private final String errorMessage                            | 에러 메시지                            |
+| controller.LottoController          | private final LottoService lottoService                      | 의존성 주입으로 서비스 객체를 할당받아 컨트롤하기 위한 변수 |
+|                                     | public void run()                                            | 컨트롤러를 시작                          |
+|                                     | private IssuedLottosDto issueLottos()                        | 구입 금액을 입력 받아 로또를 발행               |
+|                                     | private void registerWinningLottoNumber()                    | 당첨 번호를 입력 받아 등록                   |
+|                                     | private void registerBonusNumber()                           | 보너스 번호를 입력 받아 등록                  |
+|                                     | private LottoResultDto getLottoResult()                      | 당첨 통계를 계산하여 반환                    |
+| domain.IssuedLottos                 | private static IssuedLottos issuedLottosObj                  | 싱글톤 패턴 구현을 위한 객체의 참조값을 담는 클래스 변수  |
+|                                     | private final List<Lotto> lottos                             | 발행한 로또 리스트                        |
+|                                     | public static IssuedLottos getInstance()                     | 객체 할당                             |
+|                                     | public void add(List<Integer> lottoNumbers)                  | 발행한 로또를 리스트에 추가                   |
+|                                     | public IssuedLottosDto getIssuedLottos()                     | 발행한 로또의 결과를 DTO로 변환하여 반환          |
+|                                     | public Iterator<Lotto> getIssuedLottosViewer()               | 리스트 순회를 위한 Iterator 반환            |
+|                                     | public static void resetForTest()                            | 테스트를 위한 객체 삭제                     |
+| domain.Lotto                        | private final List<Integer> numbers                          | 로또 번호 리스트                         |
+|                                     | public static Lotto from(List<Integer> numbers)              | 정적 팩토리 메서드                        |
+|                                     | private void validateLottoNumbersCount(List<Integer> numbers) | 로또 번호 개수 검증                       |
+|                                     | private void validateLottoNumbersRange(List<Integer> numbers) | 로또 번호 범위 검증                       |
+|                                     | private void validateLottoNumbersUnique(List<Integer> numbers) | 로또 번호 중복 검증                       |
+|                                     | public boolean contains(Integer number)                      | 로또 번호 리스트에 이미 있는 값인지 확인           |
+|                                     | public Integer getMatchedCount(Lotto lotto)                  | 로또 번호와 일치하는 숫자의 개수 반환             |
+| domain.LottoMachine                 | private final Integer lottoCount                             | 발행할 로또 개수                         |
+|                                     | public static LottoMachine from(Integer purchaseAmount)      | 정적 팩토리 메서드                        |
+|                                     | public IssuedLottosDto generateLottos(LottoGenerator lottoGenerator) | 알맞은 개수만큼 로또를 발행                   |
+| domain.LottoResult                  | private final Map<Rank, Integer> lottoResult                 | 등수별 당첨 개수를 저장하는 맵                 |
+|                                     | private Double profitRate                                    | 수익률                               |
+|                                     | public static LottoResult getInstance()                      | 정적 팩토리 메서드                        |
+|                                     | public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) | 당첨 통계 계산하여 반환                     |
+|                                     | private void calculateLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) | 등수별 당첨 개수 계산                      |
+|                                     | private void calculateProfitRate()                           | 수익률 계산                            |
+| domain.PurchaseAmount               | private static PurchaseAmount purchaseAmountObj              | 싱글톤 패턴 구현을 위한 객체의 참조값을 담는 클래스 변수  |
+|                                     | private final Integer purchaseAmount                         | 구입 금액                             |
+|                                     | public static PurchaseAmount from(Integer purchaseAmount)    | 정적 팩토리 메서드                        |
+|                                     | public static PurchaseAmount getInstance()                   | 정적 팩토리 메서드                        |
+|                                     | private void validateRange(Integer purchaseAmount)           | 구입 금액 범위 검증                       |
+|                                     | private void validateUnit(Integer purchaseAmount)            | 구입 금액 단위 검증                       |
+|                                     | public Integer getLottoCount()                               | 금액에 알맞은 발행할 로또의 개수 계산             |
+|                                     | public Double getProfitRate(Long profit)                     | 수익률 계산                            |
+|                                     | public static void resetForTest()                            | 테스트를 위한 객체 삭제                     |
+| domain.WinningLotto                 | private final Lotto winningLotto                             | 당첨 로또                             |
+|                                     | private Integer bonusNumber                                  | 보너스 번호                            |
+|                                     | public static WinningLotto from(List<Integer> winningLottoNumber) | 정적 팩토리 메서드                        |
+|                                     | public void registerBonusNumber(Integer bonusNumber)         | 보너스 번호 등록                         |
+|                                     | private void validateBonusNumberRange(Integer bonusNumber)   | 보너스 번호 범위 검증                      |
+|                                     | private void validateBonusNumberUnique(Integer bonusNumber)  | 보너스 번호 중복 검증                      |
+|                                     | public Rank determineRank(Lotto issuedLotto)                 | 등수 결정                             |
+| dto.IssuedLottosDto(Record)         | List<List<Integer>> issuedLottos                             | 발행한 로또 번호                         |
+|                                     | List<List<Integer>> issuedLottos()                           | 발행한 로또 번호 반환                      |
+| dto.LottoResultDto(Record)          | Map<Rank, Integer> lottoResult                               | 등수별 당첨 개수                         |
+|                                     | Double profitRate                                            | 수익률                               |
+|                                     | public Map<Rank, Integer> lottoResult()                      | 등수별 당첨 개수 반환                      |
+|                                     | public Double profitRate()                                   | 수익률 반환                            |
+| generator.LottoGenerator(Interface) | List<Integer> generateLottoNumbers()                         | 6개의 로또 번호 생성(추상 메서드)              |
+| generator.FixedLottoGenerator       | private final List<List<Integer>> lottoNumbers               | 고정된 로또 번호 리스트                     |
+|                                     | public FixedLottoGenerator(List<List<Integer>> lottoNumbers) | 생성자 의존성 주입으로 고정된 로또 번호 리스트 저장     |
+|                                     | public List<Integer> generateLottoNumbers()                  | 고정된 로또 번호 반환                      |
+| generator.RandomLottoGenerator      | public List<Integer> generateLottoNumbers()                  | 랜덤 로또 번호 반환                       |
+| service.LottoService                | private WinningLotto winningLotto                            | 당첨 로또                             |
+|                                     | public void registerWinningLottoNumber(List<Integer> winningLottoNumber) | 당첨 번호 등록                          |
+|                                     | public void registerBonusNumber(Integer bonusNumber)         | 보너스 번호 등록                         |
+|                                     | public LottoResultDto getLottoResult()                       | 당첨 통계 반환                          |
+| util.InputParser                    | DELIMITER                                                    | 쉼표 구분자 상수                         |
+|                                     | public static Integer parsePurchaseAmount(String rawPurchaseAmount) | 구입 금액 입력값 검증 및 정수 변환              |
+|                                     | public static List<Integer> parseWinningLottoNumber(String rawWinningLottoNumber) | 당첨 번호 입력값 검증 및 쉼표로 분리 및 정수 변환     |
+|                                     | public static Integer parseBonusNumber(String rawBonusNumber) | 보너스 번호 입력값 검증 및 정수 변환             |
+|                                     | private static Integer convertToNumber(String input)         | 문자열 정수 변환                         |
+| util.Validator                      | CSV_FORMAT                                                   | 쉼표 구분 입력 패턴                       |
+|                                     | public static void validateNullOrBlank(String input)         | null 또는 빈 문자열 검증                  |
+|                                     | public static void validateCsvFormat(String input)           | 쉼표 구분 입력 형식 검증                    |
+| view.Printer                        | NEW_LINE, PURCHASE_AMOUNT_REQUEST 등                          | 출력 메시지 상수                         |
+|                                     | public static void printPurchaseAmountRequest()              | 구입 금액 입력 메시지                      |
+|                                     | public static void printWinningLottoRequest()                | 당첨 번호 입력 메시지                      |
+|                                     | public static void printBonusNumberRequest()                 | 보너스 번호 입력 메시지                     |
+|                                     | public static void printIssuedLottos(IssuedLottosDto issuedLottosDto) | 발행한 로또 번호 출력                      |
+|                                     | public static void printLottoResult(LottoResultDto lottoResultDto) | 당첨 통계 출력                          |
+|                                     | public static void printErrorMessage(IllegalArgumentException e) | 에러메시지 출력                          |
+| view.Reader                         | public static String readInput()                             | 사용자 입력값 받아서 반환                    |
