@@ -25,9 +25,9 @@ public class LottoResult {
         return new LottoResult();
     }
 
-    public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) {
+    public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos, PurchaseAmount purchaseAmount) {
         calculateLottoResult(winningLotto, issuedLottos);
-        calculateProfitRate();
+        calculateProfitRate(purchaseAmount);
 
         return new LottoResultDto(Collections.unmodifiableMap(lottoResult), profitRate);
     }
@@ -43,13 +43,12 @@ public class LottoResult {
         }
     }
 
-    private void calculateProfitRate() {
+    private void calculateProfitRate(PurchaseAmount purchaseAmount) {
         Long profit = 0L;
         for (Rank rank : lottoResult.keySet()) {
             profit += rank.getPrize() * lottoResult.get(rank);
         }
 
-        PurchaseAmount purchaseAmount = PurchaseAmount.getInstance();
         if (purchaseAmount != null) {
             profitRate = purchaseAmount.getProfitRate(profit);
         }
