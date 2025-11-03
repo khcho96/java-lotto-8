@@ -21,15 +21,17 @@ class LottoMachineTest {
         lottoNumbers.add(new ArrayList<>(List.of(1, 10, 45, 39, 21, 11)));
         lottoNumbers.add(new ArrayList<>(List.of(13, 1, 9, 8, 15, 30)));
         lottoNumbers.add(new ArrayList<>(List.of(4, 41, 23, 12, 13, 45)));
-        Integer purchasedAmount = 5000;
-        LottoMachine lottoMachine = LottoMachine.from(purchasedAmount);
 
+        Integer purchasedAmount = 5000;
+        LottoMachine lottoMachine = LottoMachine.from(PurchaseAmount.from(purchasedAmount));
+        
         // when
-        IssuedLottosDto issuedLottosDto = lottoMachine.generateLottos(new FixedLottoGenerator(lottoNumbers));
-        List<List<Integer>> issuedLottos = issuedLottosDto.issuedLottos();
+        IssuedLottos issuedLottos = lottoMachine.generateLottos(new FixedLottoGenerator(lottoNumbers));
+        IssuedLottosDto issuedLottosDto = issuedLottos.getIssuedLottos();
+        List<List<Integer>> issuedLottosResult = issuedLottosDto.issuedLottos();
 
         // then
-        assertThat(issuedLottos).containsExactly(
+        assertThat(issuedLottosResult).containsExactly(
                 List.of(1, 11, 15, 16, 23, 41),
                 List.of(5, 14, 31, 32, 40, 41),
                 List.of(1, 10, 11, 21, 39, 45),
