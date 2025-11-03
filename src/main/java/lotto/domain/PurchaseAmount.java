@@ -8,7 +8,6 @@ import static lotto.constant.core.Constant.PURCHASE_AMOUNT_UNIT;
 
 public class PurchaseAmount {
 
-    private static PurchaseAmount instance;
     private final Integer purchaseAmount;
 
     private PurchaseAmount(Integer purchaseAmount) {
@@ -19,14 +18,7 @@ public class PurchaseAmount {
     }
 
     public static PurchaseAmount from(Integer purchaseAmount) {
-        if (instance == null) {
-            instance = new PurchaseAmount(purchaseAmount);
-        }
-        return instance;
-    }
-
-    public static PurchaseAmount getInstance() {
-        return instance;
+        return new PurchaseAmount(purchaseAmount);
     }
 
     private void validateRange(Integer purchaseAmount) {
@@ -47,9 +39,5 @@ public class PurchaseAmount {
 
     public Double getProfitRate(Long profit) {
         return (double) profit / purchaseAmount * 100;
-    }
-
-    public static void resetForTest() {
-        instance = null;
     }
 }
