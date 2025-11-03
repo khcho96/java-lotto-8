@@ -2,7 +2,6 @@ package lotto.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
 import lotto.generator.FixedLottoGenerator;
@@ -25,7 +24,7 @@ class LottoMachineTest {
 
         Integer purchasedAmount = 5000;
         LottoMachine lottoMachine = LottoMachine.from(PurchaseAmount.from(purchasedAmount));
-        
+
         // when
         IssuedLottos issuedLottos = lottoMachine.generateLottos(new FixedLottoGenerator(lottoNumbers));
         IssuedLottosDto issuedLottosDto = issuedLottos.getIssuedLottos();
