@@ -29,6 +29,7 @@ public class WinningLotto {
     public void registerBonusNumber(Integer bonusNumber) {
         validateBonusNumberRange(bonusNumber);
         validateBonusNumberUnique(bonusNumber);
+
         this.bonusNumber = bonusNumber;
     }
 
@@ -46,6 +47,7 @@ public class WinningLotto {
 
     public Rank determineRank(Lotto issuedLotto) {
         Integer matchedCount = winningLotto.getMatchedCount(issuedLotto);
+
         if (matchedCount == FIRST_RANK_MATCHED_COUNT) {
             return Rank.FIRST;
         }
