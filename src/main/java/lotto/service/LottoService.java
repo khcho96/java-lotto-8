@@ -4,6 +4,7 @@ import java.util.List;
 import lotto.domain.IssuedLottos;
 import lotto.domain.LottoMachine;
 import lotto.domain.LottoResult;
+import lotto.domain.PurchaseAmount;
 import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottosDto;
 import lotto.dto.LottoResultDto;
@@ -12,12 +13,16 @@ import lotto.generator.RandomLottoGenerator;
 public class LottoService {
 
     private WinningLotto winningLotto;
+    private IssuedLottos issuedLottos;
+    private PurchaseAmount purchaseAmount;
 
     public IssuedLottosDto issueLottos(Integer purchaseAmount) {
-        LottoMachine lottoMachine = LottoMachine.from(purchaseAmount);
+        this.purchaseAmount = PurchaseAmount.from(purchaseAmount);
+        LottoMachine lottoMachine = LottoMachine.from(this.purchaseAmount);
         RandomLottoGenerator lottoGenerator = new RandomLottoGenerator();
 
-        return lottoMachine.generateLottos(lottoGenerator);
+        issuedLottos = lottoMachine.generateLottos(lottoGenerator);
+        return issuedLottos.getIssuedLottos();
     }
 
     public void registerWinningLottoNumber(List<Integer> winningLottoNumber) {
@@ -29,9 +34,8 @@ public class LottoService {
     }
 
     public LottoResultDto getLottoResult() {
-        IssuedLottos issuedLottos = IssuedLottos.getInstance();
         LottoResult lottoResult = LottoResult.getInstance();
 
-        return lottoResult.getLottoResult(winningLotto, issuedLottos);
+        return lottoResult.getLottoResult(winningLotto, issuedLottos, purchaseAmount);
     }
 }
