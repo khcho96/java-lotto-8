@@ -238,13 +238,11 @@
 |                                     | private void registerWinningLottoNumber()                    | 당첨 번호를 입력 받아 등록                   |
 |                                     | private void registerBonusNumber()                           | 보너스 번호를 입력 받아 등록                  |
 |                                     | private LottoResultDto getLottoResult()                      | 당첨 통계를 계산하여 반환                    |
-| domain.IssuedLottos                 | private static IssuedLottos issuedLottosObj                  | 싱글톤 패턴 구현을 위한 객체의 참조값을 담는 클래스 변수  |
-|                                     | private final List<Lotto> lottos                             | 발행한 로또 리스트                        |
-|                                     | public static IssuedLottos getInstance()                     | 객체 할당                             |
+| domain.IssuedLottos                 | private final List<Lotto> lottos                             | 발행한 로또 리스트                        |
+|                                     | public static IssuedLottos getInstance()                     | 정적 팩토리 메서드                        |
 |                                     | public void add(List<Integer> lottoNumbers)                  | 발행한 로또를 리스트에 추가                   |
 |                                     | public IssuedLottosDto getIssuedLottos()                     | 발행한 로또의 결과를 DTO로 변환하여 반환          |
 |                                     | public Iterator<Lotto> getIssuedLottosViewer()               | 리스트 순회를 위한 Iterator 반환            |
-|                                     | public static void resetForTest()                            | 테스트를 위한 객체 삭제                     |
 | domain.Lotto                        | private final List<Integer> numbers                          | 로또 번호 리스트                         |
 |                                     | public static Lotto from(List<Integer> numbers)              | 정적 팩토리 메서드                        |
 |                                     | private void validateLottoNumbersCount(List<Integer> numbers) | 로또 번호 개수 검증                       |
@@ -254,22 +252,19 @@
 |                                     | public Integer getMatchedCount(Lotto lotto)                  | 로또 번호와 일치하는 숫자의 개수 반환             |
 | domain.LottoMachine                 | private final Integer lottoCount                             | 발행할 로또 개수                         |
 |                                     | public static LottoMachine from(Integer purchaseAmount)      | 정적 팩토리 메서드                        |
-|                                     | public IssuedLottosDto generateLottos(LottoGenerator lottoGenerator) | 알맞은 개수만큼 로또를 발행                   |
+|                                     | public IssuedLottos generateLottos(LottoGenerator lottoGenerator) | 알맞은 개수만큼 로또를 발행                   |
 | domain.LottoResult                  | private final Map<Rank, Integer> lottoResult                 | 등수별 당첨 개수를 저장하는 맵                 |
 |                                     | private Double profitRate                                    | 수익률                               |
 |                                     | public static LottoResult getInstance()                      | 정적 팩토리 메서드                        |
-|                                     | public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) | 당첨 통계 계산하여 반환                     |
+|                                     | public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos, PurchaseAmount purchaseAmount) | 당첨 통계 계산하여 반환                     |
 |                                     | private void calculateLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) | 등수별 당첨 개수 계산                      |
-|                                     | private void calculateProfitRate()                           | 수익률 계산                            |
-| domain.PurchaseAmount               | private static PurchaseAmount purchaseAmountObj              | 싱글톤 패턴 구현을 위한 객체의 참조값을 담는 클래스 변수  |
-|                                     | private final Integer purchaseAmount                         | 구입 금액                             |
+|                                     | private void calculateProfitRate(PurchaseAmount purchaseAmount) | 수익률 계산                            |
+| domain.PurchaseAmount               | private final Integer purchaseAmount                         | 구입 금액                             |
 |                                     | public static PurchaseAmount from(Integer purchaseAmount)    | 정적 팩토리 메서드                        |
-|                                     | public static PurchaseAmount getInstance()                   | 정적 팩토리 메서드                        |
 |                                     | private void validateRange(Integer purchaseAmount)           | 구입 금액 범위 검증                       |
 |                                     | private void validateUnit(Integer purchaseAmount)            | 구입 금액 단위 검증                       |
 |                                     | public Integer getLottoCount()                               | 금액에 알맞은 발행할 로또의 개수 계산             |
 |                                     | public Double getProfitRate(Long profit)                     | 수익률 계산                            |
-|                                     | public static void resetForTest()                            | 테스트를 위한 객체 삭제                     |
 | domain.WinningLotto                 | private final Lotto winningLotto                             | 당첨 로또                             |
 |                                     | private Integer bonusNumber                                  | 보너스 번호                            |
 |                                     | public static WinningLotto from(List<Integer> winningLottoNumber) | 정적 팩토리 메서드                        |
@@ -289,6 +284,8 @@
 |                                     | public List<Integer> generateLottoNumbers()                  | 고정된 로또 번호 반환                      |
 | generator.RandomLottoGenerator      | public List<Integer> generateLottoNumbers()                  | 랜덤 로또 번호 반환                       |
 | service.LottoService                | private WinningLotto winningLotto                            | 당첨 로또                             |
+|                                     | private IssuedLottos issuedLottos                            | 발행한 로또                            |
+|                                     | private PurchaseAmount purchaseAmount                        | 구입 금액                             |
 |                                     | public void registerWinningLottoNumber(List<Integer> winningLottoNumber) | 당첨 번호 등록                          |
 |                                     | public void registerBonusNumber(Integer bonusNumber)         | 보너스 번호 등록                         |
 |                                     | public LottoResultDto getLottoResult()                       | 당첨 통계 반환                          |
