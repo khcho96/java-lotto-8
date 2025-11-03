@@ -30,6 +30,7 @@ public class Printer {
 
     public static void printIssuedLottos(IssuedLottosDto issuedLottosDto) {
         List<List<Integer>> issuedLottos = issuedLottosDto.issuedLottos();
+
         System.out.printf(NEW_LINE + LOTTO_COUNT_RESULT + NEW_LINE, issuedLottos.size());
         for (List<Integer> issuedLotto : issuedLottos) {
             System.out.println(issuedLotto);
@@ -37,8 +38,9 @@ public class Printer {
     }
 
     public static void printLottoResult(LottoResultDto lottoResultDto) {
-        System.out.println(NEW_LINE + WINNING_RESULT);
         Map<Rank, Integer> lottoResult = lottoResultDto.lottoResult();
+
+        System.out.println(NEW_LINE + WINNING_RESULT);
         for (Rank rank : lottoResult.keySet()) {
             System.out.printf(rank.getPrintedContents() + NEW_LINE, lottoResult.get(rank));
         }
