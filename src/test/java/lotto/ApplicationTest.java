@@ -1,9 +1,6 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import lotto.domain.IssuedLottos;
-import lotto.domain.PurchaseAmount;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 
@@ -53,12 +50,6 @@ class ApplicationTest extends NsTest {
             List.of(2, 13, 22, 32, 38, 45),
             List.of(1, 3, 5, 14, 22, 45)
     );
-
-    @AfterEach
-    void tearDown() {
-        IssuedLottos.resetForTest();
-        PurchaseAmount.resetForTest();
-    }
 
     @DisplayName("구입 금액 정상 입력 테스트")
     @ParameterizedTest
