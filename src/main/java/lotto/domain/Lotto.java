@@ -17,6 +17,7 @@ public class Lotto {
         validateLottoNumbersCount(numbers);
         validateLottoNumbersRange(numbers);
         validateLottoNumbersUnique(numbers);
+
         this.numbers = numbers.stream()
                 .sorted()
                 .toList();
