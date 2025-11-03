@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import lotto.dto.IssuedLottosDto;
-import lotto.random.FixedLottoGenerator;
+import lotto.generator.FixedLottoGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
