@@ -33,7 +33,7 @@ public class IssuedLottos {
         return new IssuedLottosDto(issuedLottos);
     }
 
-    public Iterator<Lotto> getIterator() {
+    public Iterator<Lotto> getIssuedLottosViewer() {
         return lottos.iterator();
     }
 

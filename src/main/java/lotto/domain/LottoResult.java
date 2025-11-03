@@ -33,9 +33,9 @@ public class LottoResult {
     }
 
     private void calculateLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) {
-        Iterator<Lotto> issuedLottosIterator = issuedLottos.getIterator();
-        while (issuedLottosIterator.hasNext()) {
-            Lotto issuedLotto = issuedLottosIterator.next();
+        Iterator<Lotto> issuedLottosViewer = issuedLottos.getIssuedLottosViewer();
+        while (issuedLottosViewer.hasNext()) {
+            Lotto issuedLotto = issuedLottosViewer.next();
             Rank rank = winningLotto.determineRank(issuedLotto);
             if (rank != null) {
                 lottoResult.put(rank, lottoResult.get(rank) + 1);
