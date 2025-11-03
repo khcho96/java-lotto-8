@@ -15,12 +15,13 @@ class LottoMachineTest {
     @Test
     void 로또_발행_테스트() {
         // given
-        List<List<Integer>> lottoNumbers = new ArrayList<>();
-        lottoNumbers.add(new ArrayList<>(List.of(41, 23, 11, 1, 15, 16)));
-        lottoNumbers.add(new ArrayList<>(List.of(14, 5, 32, 31, 40, 41)));
-        lottoNumbers.add(new ArrayList<>(List.of(1, 10, 45, 39, 21, 11)));
-        lottoNumbers.add(new ArrayList<>(List.of(13, 1, 9, 8, 15, 30)));
-        lottoNumbers.add(new ArrayList<>(List.of(4, 41, 23, 12, 13, 45)));
+        List<List<Integer>> lottoNumbers = List.of(
+                List.of(41, 23, 11, 1, 15, 16),
+                List.of(14, 5, 32, 31, 40, 41),
+                List.of(1, 10, 45, 39, 21, 11),
+                List.of(13, 1, 9, 8, 15, 30),
+                List.of(4, 41, 23, 12, 13, 45)
+                );
 
         Integer purchasedAmount = 5000;
         LottoMachine lottoMachine = LottoMachine.from(PurchaseAmount.from(purchasedAmount));
