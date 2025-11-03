@@ -28,6 +28,7 @@ public class LottoResult {
     public LottoResultDto getLottoResult(WinningLotto winningLotto, IssuedLottos issuedLottos) {
         calculateLottoResult(winningLotto, issuedLottos);
         calculateProfitRate();
+
         return new LottoResultDto(Collections.unmodifiableMap(lottoResult), profitRate);
     }
 
