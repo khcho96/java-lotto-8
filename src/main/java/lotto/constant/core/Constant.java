@@ -1,6 +1,6 @@
 package lotto.constant.core;
 
-public class Constant {
+public final class Constant {
 
     public static final int PURCHASE_AMOUNT_MIN = 0;
     public static final int PURCHASE_AMOUNT_MAX = 100000;

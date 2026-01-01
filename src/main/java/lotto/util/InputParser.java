@@ -1,7 +1,5 @@
 package lotto.util;
 
-import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR;
-
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -15,7 +13,7 @@ public final class InputParser {
         Validator.validateNullOrBlank(rawPurchaseAmount);
         rawPurchaseAmount = rawPurchaseAmount.strip();
 
-        return convertToNumber(rawPurchaseAmount);
+        return NumberConvertor.convertToNumber(rawPurchaseAmount);
     }
 
     public static List<Integer> parseWinningLottoNumber(String rawWinningLottoNumber) {
@@ -26,7 +24,7 @@ public final class InputParser {
 
         return Stream.of(rawWinningLottoNumber.split(DELIMITER))
                 .map(String::strip)
-                .map(InputParser::convertToNumber)
+                .map(NumberConvertor::convertToNumber)
                 .toList();
     }
 
@@ -34,14 +32,6 @@ public final class InputParser {
         Validator.validateNullOrBlank(rawBonusNumber);
         rawBonusNumber = rawBonusNumber.strip();
 
-        return convertToNumber(rawBonusNumber);
-    }
-
-    private static Integer convertToNumber(String input) {
-        try {
-            return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(NUMBER_FORMAT_ERROR.getErrorMessage());
-        }
+        return NumberConvertor.convertToNumber(rawBonusNumber);
     }
 }
