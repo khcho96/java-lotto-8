@@ -2,6 +2,7 @@ package lotto.service;
 
 import java.util.List;
 import lotto.domain.LottoMachine;
+import lotto.domain.LottoResult;
 import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottoResult;
 
@@ -28,5 +29,9 @@ public class LottoService {
 
     public void registerBonusNumber(int bonusNumber) {
         winningLotto.registerBonusNumber(bonusNumber);
+    }
+
+    public LottoResult calculateResult() {
+        return lottoMachine.calculateResult(winningLotto);
     }
 }

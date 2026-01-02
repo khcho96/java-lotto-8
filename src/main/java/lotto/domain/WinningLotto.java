@@ -26,4 +26,12 @@ public class WinningLotto {
             throw new IllegalArgumentException(ErrorMessage.BONUS_NUMBER_DUPLICATION_ERROR.getErrorMessage());
         }
     }
+
+    public boolean isBonusMatch(Lotto lotto) {
+        return lotto.getNumbers().contains(bonusNumber.getBonusNumber());
+    }
+
+    public int getMatchCount(Lotto lotto) {
+        return lotto.getMatchCount(winningLotto);
+    }
 }

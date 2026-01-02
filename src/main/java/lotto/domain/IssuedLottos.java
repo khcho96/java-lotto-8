@@ -28,4 +28,8 @@ public class IssuedLottos {
 
         return numbers;
     }
+
+    public List<Lotto> getLottos() {
+        return lottos;
+    }
 }

@@ -50,4 +50,10 @@ public class Lotto {
     public boolean isDuplicated(int bonusNumber) {
         return numbers.contains(bonusNumber);
     }
+
+    public int getMatchCount(Lotto lotto) {
+        List<Integer> matchNumbers = new ArrayList<>(this.numbers);
+        matchNumbers.retainAll(lotto.numbers);
+        return matchNumbers.size();
+    }
 }
