@@ -25,4 +25,8 @@ public class LottoService {
     public void registerWinningLotto(List<Integer> winningNumbers) {
         winningLotto = WinningLotto.from(winningNumbers);
     }
+
+    public void registerBonusNumber(int bonusNumber) {
+        winningLotto.registerBonusNumber(bonusNumber);
+    }
 }

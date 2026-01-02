@@ -46,4 +46,8 @@ public class Lotto {
     public List<Integer> getNumbers() {
         return new ArrayList<>(numbers);
     }
+
+    public boolean isDuplicated(int bonusNumber) {
+        return numbers.contains(bonusNumber);
+    }
 }

@@ -32,6 +32,7 @@ public class LottoController {
 
         Retry.retryUntilSuccess(() -> {
             int bonusNumber = InputParser.parseNumber(InputView.readBonusNumber());
+            lottoService.registerBonusNumber(bonusNumber);
         });
     }
 }
