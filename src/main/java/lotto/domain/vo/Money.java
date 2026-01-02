@@ -4,15 +4,9 @@ import java.util.Map;
 import lotto.constant.ErrorMessage;
 import lotto.constant.Rank;
 
-public class Money {
+public record Money(int money) {
 
     private static final int MONEY_UNIT = 1000;
-
-    private final int money;
-
-    private Money(int money) {
-        this.money = money;
-    }
 
     public static Money from(int money) {
         validateMoney(money);

@@ -2,16 +2,13 @@ package lotto.domain;
 
 import lotto.constant.ErrorMessage;
 
-public class BonusNumber {
+public record BonusNumber(int bonusNumber) {
 
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 45;
 
-    private final int bonusNumber;
-
-    private BonusNumber(int bonusNumber) {
+    public BonusNumber {
         validateRange(bonusNumber);
-        this.bonusNumber = bonusNumber;
     }
 
     public static BonusNumber from(int bonusNumber) {
@@ -22,9 +19,5 @@ public class BonusNumber {
         if (bonusNumber > MAX_NUMBER || bonusNumber < MIN_NUMBER) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
         }
-    }
-
-    public int getBonusNumber() {
-        return bonusNumber;
     }
 }
