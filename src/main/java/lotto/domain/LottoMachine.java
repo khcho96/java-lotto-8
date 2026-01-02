@@ -1,6 +1,5 @@
 package lotto.domain;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -47,13 +46,6 @@ public class LottoMachine {
         return LottoResult.from(result, money.calculateProfit(result));
     }
 
-    private static void reflectRests(Map<Rank, Integer> result) {
-        List<Rank> ranks = Arrays.stream(Rank.values()).filter(rank -> !rank.equals(Rank.NONE)).toList();
-        for (Rank rank : ranks) {
-            result.putIfAbsent(rank, 0);
-        }
-    }
-
     private void calculateResult(WinningLotto winningLotto, Map<Rank, Integer> result) {
         for (Lotto lotto : issuedLottos.getLottos()) {
             boolean isBonusMatch = winningLotto.isBonusMatch(lotto);
@@ -63,5 +55,12 @@ public class LottoMachine {
 
             result.put(rank, result.getOrDefault(rank, 0) + 1);
         }
+    }
+
+    private void reflectRests(Map<Rank, Integer> result) {
+        for (Rank rank : Rank.values()) {
+            result.putIfAbsent(rank, 0);
+        }
+        result.remove(Rank.NONE);
     }
 }
