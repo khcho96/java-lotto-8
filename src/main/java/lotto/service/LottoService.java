@@ -15,5 +15,7 @@ public class LottoService {
 
     public IssuedLottoResult issueLottos() {
         lottoMachine.issueLottos();
+
+        return lottoMachine.getIssuedLottos();
     }
 }

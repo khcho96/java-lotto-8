@@ -2,6 +2,7 @@ package lotto.domain;
 
 import java.util.List;
 import lotto.domain.vo.Money;
+import lotto.dto.IssuedLottoResult;
 import lotto.generator.NumberGenerator;
 
 public class LottoMachine {
@@ -25,5 +26,9 @@ public class LottoMachine {
 
             issuedLottos.issue(numbers);
         }
+    }
+
+    public IssuedLottoResult getIssuedLottos() {
+        return IssuedLottoResult.of(money.getLottoCount(), issuedLottos.getNumbers());
     }
 }

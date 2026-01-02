@@ -5,6 +5,7 @@ import lotto.service.LottoService;
 import lotto.util.InputParser;
 import lotto.util.Retry;
 import lotto.view.InputView;
+import lotto.view.OutputView;
 
 public class LottoController {
 
@@ -21,6 +22,9 @@ public class LottoController {
         });
 
         IssuedLottoResult issuedLottoResult = lottoService.issueLottos();
+        OutputView.printIssuedLottos(issuedLottoResult);
+
+
     }
 }
 

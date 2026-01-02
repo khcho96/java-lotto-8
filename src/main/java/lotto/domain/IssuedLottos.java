@@ -18,4 +18,14 @@ public class IssuedLottos {
     public void issue(List<Integer> numbers) {
         lottos.add(Lotto.from(numbers));
     }
+
+    public List<List<Integer>> getNumbers() {
+        List<List<Integer>> numbers = new ArrayList<>();
+
+        for (Lotto lotto : lottos) {
+            numbers.add(lotto.getNumbers());
+        }
+
+        return numbers;
+    }
 }
