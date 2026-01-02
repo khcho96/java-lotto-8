@@ -4,6 +4,9 @@ import lotto.constant.ErrorMessage;
 
 public class BonusNumber {
 
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 45;
+
     private final int bonusNumber;
 
     private BonusNumber(int bonusNumber) {
@@ -16,7 +19,7 @@ public class BonusNumber {
     }
 
     private void validateRange(int bonusNumber) {
-        if (bonusNumber > 45 || bonusNumber < 1) {
+        if (bonusNumber > MAX_NUMBER || bonusNumber < MIN_NUMBER) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
         }
     }

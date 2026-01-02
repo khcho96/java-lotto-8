@@ -5,9 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import lotto.constant.ErrorMessage;
 
-public class Lotto {
+public record Lotto(List<Integer> numbers) {
 
-    private final List<Integer> numbers;
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 45;
+    private static final int LOTTO_NUMBER_COUNT = 6;
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
@@ -25,7 +27,7 @@ public class Lotto {
     }
 
     private void validateCount(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_COUNT_ERROR.getErrorMessage());
         }
     }
@@ -38,12 +40,13 @@ public class Lotto {
 
     private void validateRange(List<Integer> numbers) {
         if (numbers.stream()
-                .anyMatch(number -> number > 45 || number < 1)) {
+                .anyMatch(number -> number > MAX_NUMBER || number < MIN_NUMBER)) {
             throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_RANGE_ERROR.getErrorMessage());
         }
     }
 
-    public List<Integer> getNumbers() {
+    @Override
+    public List<Integer> numbers() {
         return new ArrayList<>(numbers);
     }
 

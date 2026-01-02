@@ -18,26 +18,37 @@ public class LottoController {
     }
 
     public void run() {
-        IssuedLottoResult issuedLottoResult = Retry.retryUntilSuccess(() -> {
-            int money = InputParser.parseNumber(InputView.readMoney());
-            lottoService.registerMoney(money);
-            return lottoService.issueLottos();
-        });
-
+        IssuedLottoResult issuedLottoResult = registerMoney();
         OutputView.printIssuedLottos(issuedLottoResult);
 
-        Retry.retryUntilSuccess(() -> {
-            List<Integer> winningNumbers = InputParser.parseCsvInput(InputView.readWinningNumbers());
-            lottoService.registerWinningLotto(winningNumbers);
-        });
+        registerWinningLotto();
 
+        registerBonusNumber();
+
+        LottoResult result = lottoService.calculateResult();
+        OutputView.printResult(result);
+    }
+
+    private void registerBonusNumber() {
         Retry.retryUntilSuccess(() -> {
             int bonusNumber = InputParser.parseNumber(InputView.readBonusNumber());
             lottoService.registerBonusNumber(bonusNumber);
         });
+    }
 
-        LottoResult result = lottoService.calculateResult();
-        OutputView.printResult(result);
+    private void registerWinningLotto() {
+        Retry.retryUntilSuccess(() -> {
+            List<Integer> winningNumbers = InputParser.parseCsvInput(InputView.readWinningNumbers());
+            lottoService.registerWinningLotto(winningNumbers);
+        });
+    }
+
+    private IssuedLottoResult registerMoney() {
+        return Retry.retryUntilSuccess(() -> {
+            int money = InputParser.parseNumber(InputView.readMoney());
+            lottoService.registerMoney(money);
+            return lottoService.issueLottos();
+        });
     }
 }
 

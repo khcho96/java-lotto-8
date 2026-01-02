@@ -6,6 +6,8 @@ import lotto.constant.Rank;
 
 public class Money {
 
+    private static final int MONEY_UNIT = 1000;
+
     private final int money;
 
     private Money(int money) {
@@ -18,13 +20,13 @@ public class Money {
     }
 
     private static void validateMoney(int money) {
-        if (money <= 0 || money % 1000 != 0) {
+        if (money <= 0 || money % MONEY_UNIT != 0) {
             throw new IllegalArgumentException(ErrorMessage.MONEY_UNIT_ERROR.getErrorMessage());
         }
     }
 
     public int getLottoCount() {
-        return money / 1000;
+        return money / MONEY_UNIT;
     }
 
     public double calculateProfit(Map<Rank, Integer> result) {

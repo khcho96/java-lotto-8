@@ -23,7 +23,7 @@ public class IssuedLottos {
         List<List<Integer>> numbers = new ArrayList<>();
 
         for (Lotto lotto : lottos) {
-            numbers.add(lotto.getNumbers());
+            numbers.add(lotto.numbers());
         }
 
         return numbers;
