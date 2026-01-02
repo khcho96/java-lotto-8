@@ -25,9 +25,16 @@ public enum Rank implements Comparable<Rank> {
     }
 
     public static Rank of(int matchCount, boolean isBonus) {
+        if (matchCount == 5) {
+            return Arrays.stream(values())
+                    .filter(rank -> rank.matchCount == matchCount)
+                    .filter(rank -> rank.isBonus == isBonus)
+                    .findFirst()
+                    .orElse(NONE);
+        }
+
         return Arrays.stream(values())
                 .filter(rank -> rank.matchCount == matchCount)
-                .filter(rank -> rank.isBonus == isBonus)
                 .findFirst()
                 .orElse(NONE);
     }
