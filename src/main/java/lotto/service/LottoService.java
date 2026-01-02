@@ -2,7 +2,7 @@ package lotto.service;
 
 import java.util.List;
 import lotto.domain.LottoMachine;
-import lotto.domain.LottoResult;
+import lotto.dto.LottoResult;
 import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottoResult;
 

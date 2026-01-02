@@ -7,6 +7,7 @@ import java.util.Map;
 import lotto.constant.Rank;
 import lotto.domain.vo.Money;
 import lotto.dto.IssuedLottoResult;
+import lotto.dto.LottoResult;
 import lotto.generator.NumberGenerator;
 
 public class LottoMachine {
@@ -43,7 +44,7 @@ public class LottoMachine {
 
         reflectRests(result);
 
-        return LottoResult.from(result, money.getMoney());
+        return LottoResult.from(result, money.calculateProfit(result));
     }
 
     private static void reflectRests(Map<Rank, Integer> result) {

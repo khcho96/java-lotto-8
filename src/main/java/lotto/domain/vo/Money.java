@@ -1,6 +1,8 @@
 package lotto.domain.vo;
 
+import java.util.Map;
 import lotto.constant.ErrorMessage;
+import lotto.constant.Rank;
 
 public class Money {
 
@@ -25,7 +27,11 @@ public class Money {
         return money % 1000;
     }
 
-    public int getMoney() {
-        return money;
+    public double calculateProfit(Map<Rank, Integer> result) {
+        long sumPrize = 0;
+        for (Rank rank : result.keySet()) {
+            sumPrize += rank.getPrice() + result.get(rank);
+        }
+        return (double) sumPrize / money * 100;
     }
 }
