@@ -29,6 +29,10 @@ public class LottoController {
             List<Integer> winningNumbers = InputParser.parseCsvInput(InputView.readWinningNumbers());
             lottoService.registerWinningLotto(winningNumbers);
         });
+
+        Retry.retryUntilSuccess(() -> {
+            int bonusNumber = InputParser.parseNumber(InputView.readBonusNumber());
+        });
     }
 }
 
