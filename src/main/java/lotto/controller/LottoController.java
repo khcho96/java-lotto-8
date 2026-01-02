@@ -27,6 +27,7 @@ public class LottoController {
 
         Retry.retryUntilSuccess(() -> {
             List<Integer> winningNumbers = InputParser.parseCsvInput(InputView.readWinningNumbers());
+            lottoService.registerWinningLotto(winningNumbers);
         });
     }
 }

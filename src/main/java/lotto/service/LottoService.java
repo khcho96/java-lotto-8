@@ -1,11 +1,14 @@
 package lotto.service;
 
+import java.util.List;
 import lotto.domain.LottoMachine;
+import lotto.domain.WinningLotto;
 import lotto.dto.IssuedLottoResult;
 
 public class LottoService {
 
     private LottoMachine lottoMachine;
+    private WinningLotto winningLotto;
 
     public void registerMoney(int money) {
         lottoMachine = LottoMachine.newInstance();
@@ -17,5 +20,9 @@ public class LottoService {
         lottoMachine.issueLottos();
 
         return lottoMachine.getIssuedLottos();
+    }
+
+    public void registerWinningLotto(List<Integer> winningNumbers) {
+        winningLotto = WinningLotto.from(winningNumbers);
     }
 }
