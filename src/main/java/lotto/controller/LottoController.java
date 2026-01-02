@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.dto.IssuedLottoResult;
 import lotto.service.LottoService;
 import lotto.util.InputParser;
 import lotto.util.Retry;
@@ -19,7 +20,7 @@ public class LottoController {
             lottoService.registerMoney(money);
         });
 
-
+        IssuedLottoResult issuedLottoResult = lottoService.issueLottos();
     }
 }
 
