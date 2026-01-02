@@ -1,6 +1,5 @@
 package lotto.controller;
 
-import lotto.dto.IssuedLottoResult;
 import lotto.service.LottoService;
 import lotto.util.InputParser;
 import lotto.util.Retry;
@@ -17,7 +16,7 @@ public class LottoController {
     public void run() {
         Retry.retryUntilSuccess(() -> {
             int money = InputParser.parseNumber(InputView.readMoney());
-            lottoService.registerMoney();
+            lottoService.registerMoney(money);
         });
 
 
