@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import java.util.List;
 import lotto.dto.IssuedLottoResult;
 import lotto.service.LottoService;
 import lotto.util.InputParser;
@@ -16,15 +17,17 @@ public class LottoController {
     }
 
     public void run() {
-        Retry.retryUntilSuccess(() -> {
+        IssuedLottoResult issuedLottoResult = Retry.retryUntilSuccess(() -> {
             int money = InputParser.parseNumber(InputView.readMoney());
             lottoService.registerMoney(money);
+            return lottoService.issueLottos();
         });
 
-        IssuedLottoResult issuedLottoResult = lottoService.issueLottos();
         OutputView.printIssuedLottos(issuedLottoResult);
 
-
+        Retry.retryUntilSuccess(() -> {
+            List<Integer> winningNumbers = InputParser.parseCsvInput(InputView.readWinningNumbers());
+        });
     }
 }
 
