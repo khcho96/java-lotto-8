@@ -2,7 +2,7 @@ package lotto.constant;
 
 import java.util.Arrays;
 
-public enum Rank implements Comparable<Rank> {
+public enum Rank {
 
     FIFTH(3, "", 5_000, false),
     FOURTH(4, "", 50_000, false),
