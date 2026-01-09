@@ -17,26 +17,37 @@ public class LottoController {
     }
 
     public void run() {
-        Retry.retryUntilSuccess(() -> {
-            int money = InputParser.parseMoney(InputView.readMoney());
-            lottoService.registerMoney(money);
-        });
+        registerMoney();
 
         List<List<Integer>> issuedLottos = lottoService.issueLottos();
         OutputView.printIssuedLotto(issuedLottos);
 
+        registerWinningNumbers();
+        registerBonusNumber();
+
+        LottoResult lottoResult = lottoService.calculateResult();
+        OutputView.printResult(lottoResult);
+    }
+
+    private void registerMoney() {
+        Retry.retryUntilSuccess(() -> {
+            int money = InputParser.parseMoney(InputView.readMoney());
+            lottoService.registerMoney(money);
+        });
+    }
+
+    private void registerWinningNumbers() {
         Retry.retryUntilSuccess(() -> {
             List<Integer> numbers = InputParser.parseWinningNumbers(InputView.readWinningNumbers());
             lottoService.registerWinningNumbers(numbers);
         });
+    }
 
+    private void registerBonusNumber() {
         Retry.retryUntilSuccess(() -> {
             int bonusNumber = InputParser.parseBonusNumber(InputView.readBonusNumber());
             lottoService.registerBonusNumber(bonusNumber);
         });
-
-        LottoResult lottoResult = lottoService.calculateResult();
-        OutputView.printResult(lottoResult);
     }
 }
 
