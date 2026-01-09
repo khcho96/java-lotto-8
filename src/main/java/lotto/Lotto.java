@@ -1,10 +1,12 @@
 package lotto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import lotto.constant.ErrorMessage;
 
 public class Lotto {
+
     private final List<Integer> numbers;
 
     private Lotto(List<Integer> numbers) {
@@ -36,7 +38,7 @@ public class Lotto {
 
     private void validateCount(List<Integer> numbers) {
         if (numbers.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+            throw new IllegalArgumentException(ErrorMessage.COUNT_ERROR.getErrorMessage());
         }
     }
 
@@ -44,5 +46,9 @@ public class Lotto {
         return numbers;
     }
 
-    // TODO: 추가 기능 구현
+    public int getMatchCount(Lotto lotto) {
+        List<Integer> numbers = new ArrayList<>(this.numbers);
+        numbers.retainAll(lotto.numbers);
+        return numbers.size();
+    }
 }

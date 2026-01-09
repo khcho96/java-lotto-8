@@ -1,6 +1,7 @@
 package lotto.controller;
 
 import java.util.List;
+import lotto.domain.LottoResult;
 import lotto.service.LottoService;
 import lotto.util.InputParser;
 import lotto.util.Retry;
@@ -33,6 +34,9 @@ public class LottoController {
             int bonusNumber = InputParser.parseBonusNumber(InputView.readBonusNumber());
             lottoService.registerBonusNumber(bonusNumber);
         });
+
+        LottoResult lottoResult = lottoService.calculateResult();
+
     }
 }
 

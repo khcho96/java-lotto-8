@@ -1,12 +1,15 @@
 package lotto.domain;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lotto.Lotto;
-import lotto.constant.ErrorMessage;
+import lotto.constant.Rank;
 
 public class WinningLotto {
 
     private final Lotto winninLotto;
-    private int bonusNumber;
+    private BonusNumber bonusNumber;
 
     private WinningLotto(Lotto winninLotto) {
         this.winninLotto = winninLotto;
@@ -17,24 +20,37 @@ public class WinningLotto {
     }
 
     public void registerBonusNumber(int bonusNumber) {
-        validateBonusNumber(bonusNumber);
-        this.bonusNumber = bonusNumber;
+        this.bonusNumber = BonusNumber.of(bonusNumber, winninLotto.getNumbers());
     }
 
-    private void validateBonusNumber(int bonusNumber) {
-        validateRange(bonusNumber);
-        validateDuplication(bonusNumber);
+    public LottoResult calculateResult(IssuedLotto issuedLotto) {
+        List<Lotto> lottos = issuedLotto.getLottos();
+
+        Map<Rank, Integer> lottoResult = calculateLottoResult(lottos);
+        double profitRate = calculateProfitRate(lottoResult, lottos.size());
+
+        return new LottoResult(lottoResult, profitRate);
     }
 
-    private void validateRange(int bonusNumber) {
-        if (bonusNumber < 1 || bonusNumber > 45) {
-            throw new IllegalArgumentException(ErrorMessage.RANGE_ERROR.getErrorMessage());
+    private Map<Rank, Integer> calculateLottoResult(List<Lotto> lottos) {
+        Map<Rank, Integer> lottoResult = new HashMap<>();
+        for (Lotto lotto : lottos) {
+            int matchCount = winninLotto.getMatchCount(lotto);
+            boolean isBonusMatch = bonusNumber.isMatch(lotto);
+            Rank rank = Rank.from(matchCount, isBonusMatch);
+            lottoResult.put(rank, lottoResult.getOrDefault(rank, 0) + 1);
         }
+        return lottoResult;
     }
 
-    private void validateDuplication(int numbers) {
-        if (winninLotto.getNumbers().contains(numbers)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATION_ERROR.getErrorMessage());
+    private double calculateProfitRate(Map<Rank, Integer> lottoResult, int lottoCount) {
+        int money = lottoCount * 1000;
+
+        long sum = 0;
+        for (Rank rank : lottoResult.keySet()) {
+            sum += lottoResult.get(rank) * rank.getPrize();
         }
+
+        return (double) sum / money * 100;
     }
 }

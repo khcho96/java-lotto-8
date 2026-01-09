@@ -20,7 +20,11 @@ public class IssuedLotto {
         return new IssuedLotto(numbers);
     }
 
-    public List<List<Integer>> getLottos() {
+    public List<Lotto> getLottos() {
+        return lottos;
+    }
+
+    public List<List<Integer>> getLottoNumbers() {
         return lottos.stream()
                 .map(Lotto::getNumbers)
                 .sorted()

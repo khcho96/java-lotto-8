@@ -4,6 +4,7 @@ import java.util.List;
 import lotto.Lotto;
 import lotto.domain.IssuedLotto;
 import lotto.domain.LottoMachine;
+import lotto.domain.LottoResult;
 import lotto.domain.WinningLotto;
 
 public class LottoService {
@@ -18,7 +19,7 @@ public class LottoService {
 
     public List<List<Integer>> issueLottos() {
         issuedLotto = lottoMachine.issueLottos();
-        return issuedLotto.getLottos();
+        return issuedLotto.getLottoNumbers();
     }
 
     public void registerWinningNumbers(List<Integer> numbers) {
@@ -27,5 +28,9 @@ public class LottoService {
 
     public void registerBonusNumber(int bonusNumber) {
         winningLotto.registerBonusNumber(bonusNumber);
+    }
+
+    public LottoResult calculateResult() {
+        return winningLotto.calculateResult(issuedLotto);
     }
 }
