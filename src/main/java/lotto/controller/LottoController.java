@@ -36,7 +36,7 @@ public class LottoController {
         });
 
         LottoResult lottoResult = lottoService.calculateResult();
-
+        OutputView.printResult(lottoResult);
     }
 }
 
