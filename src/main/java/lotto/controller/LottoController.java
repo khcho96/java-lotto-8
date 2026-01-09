@@ -28,6 +28,11 @@ public class LottoController {
             List<Integer> numbers = InputParser.parseWinningNumbers(InputView.readWinningNumbers());
             lottoService.registerWinningNumbers(numbers);
         });
+
+        Retry.retryUntilSuccess(() -> {
+            int bonusNumber = InputParser.parseBonusNumber(InputView.readBonusNumber());
+            lottoService.registerBonusNumber(bonusNumber);
+        });
     }
 }
 
