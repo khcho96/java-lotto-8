@@ -3,6 +3,7 @@ package lotto.view;
 import static java.util.Locale.KOREA;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public final class OutputView {
 
@@ -20,10 +21,10 @@ public final class OutputView {
         System.out.println(e.getMessage());
     }
 
-    public static void printIssuedLotto() {
-        System.out.printf("%d를 구매했습니다.\n");
-        for (Object object : ) {
-
+    public static void printIssuedLotto(List<List<Integer>> issuedLottos) {
+        System.out.printf("%d를 구매했습니다.\n", issuedLottos.size());
+        for (List<Integer> numbers : issuedLottos) {
+            System.out.println(numbers);
         }
         System.out.println();
     }
