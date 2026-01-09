@@ -15,6 +15,7 @@ public class IssuedLotto {
     public static IssuedLotto from(List<List<Integer>> issuedLottos) {
         List<Lotto> numbers = new ArrayList<>();
         for (List<Integer> issuedLotto : issuedLottos) {
+            issuedLotto.sort(null);
             numbers.add(Lotto.of(issuedLotto));
         }
         return new IssuedLotto(numbers);
@@ -27,7 +28,6 @@ public class IssuedLotto {
     public List<List<Integer>> getLottoNumbers() {
         return lottos.stream()
                 .map(Lotto::getNumbers)
-                .sorted()
                 .toList();
     }
 }

@@ -27,7 +27,7 @@ public final class OutputView {
     }
 
     public static void printIssuedLotto(List<List<Integer>> issuedLottos) {
-        System.out.printf("%d를 구매했습니다.\n", issuedLottos.size());
+        System.out.printf("%d개를 구매했습니다.\n", issuedLottos.size());
         for (List<Integer> numbers : issuedLottos) {
             System.out.println(numbers);
         }
@@ -41,7 +41,7 @@ public final class OutputView {
         System.out.println("당첨 통계");
         System.out.println("---");
         List<Rank> ranks = Arrays.stream(Rank.values())
-                .sorted(Comparator.comparingLong(Rank::getPrize).reversed())
+                .sorted(Comparator.comparingLong(Rank::getPrize))
                 .toList();
         for (Rank rank : ranks) {
             if (rank.equals(Rank.NONE)) {
