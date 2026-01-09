@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import java.util.List;
 import lotto.service.LottoService;
 import lotto.util.InputParser;
 import lotto.util.Retry;
@@ -19,6 +20,8 @@ public class LottoController {
             lottoService.registerMoney(money);
         });
 
+        List<List<Integer>> issuedLottos = lottoService.issueLottos();
+        
     }
 }
 

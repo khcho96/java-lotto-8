@@ -20,4 +20,8 @@ public class Money {
             throw new IllegalArgumentException(ErrorMessage.MONEY_UNIT_ERROR.getErrorMessage());
         }
     }
+
+    public int getCount() {
+        return money / 1000;
+    }
 }
