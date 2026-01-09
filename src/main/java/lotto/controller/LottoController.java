@@ -23,6 +23,11 @@ public class LottoController {
 
         List<List<Integer>> issuedLottos = lottoService.issueLottos();
         OutputView.printIssuedLotto(issuedLottos);
+
+        Retry.retryUntilSuccess(() -> {
+            List<Integer> numbers = InputParser.parseWinningNumbers(InputView.readWinningNumbers());
+            lottoService.registerWinningNumbers(numbers);
+        });
     }
 }
 
